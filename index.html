@@ -1,0 +1,2945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Urban Company - Home Services</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" />
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+ 
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: #fff; color: #111; }
+    a { text-decoration: none; color: inherit; }
+
+    
+  
+    .navbar {
+      background: #fff;
+      border-bottom: 1px solid #e5e7eb;
+      height: 70px;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      display: flex;
+      align-items: center;
+    }
+
+    /* UC logo box */
+    .logo-box {
+      width: 40px;
+      height: 40px;
+      background: #111;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 800;
+      font-style: italic;
+      flex-shrink: 0;
+    }
+
+    /* "Urban" bold, "Company" below */
+    .brand-name { line-height: 1.2; }
+    .brand-name .top { font-size: 15px; font-weight: 700; }
+    .brand-name .bot { font-size: 14px; font-weight: 400; }
+
+    /* Nav links: Revamp / Native / Beauty */
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 500;
+      color: #374151;
+      padding: 6px 14px;
+      border-radius: 8px;
+      transition: background 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { background: #f3f4f6; font-weight: 600; color: #111; }
+
+    /* Location box */
+    .location-box {
+      width: 280px;
+      height: 48px;
+      border: 1px solid #d1d5db;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 12px;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+    .location-box:hover { border-color: #9ca3af; }
+    .location-box span { font-size: 13px; font-weight: 500; flex: 1; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+
+    /* Search box */
+    .search-box {
+      width: 300px;
+      height: 48px;
+      border: 1px solid #d1d5db;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 12px;
+      position: relative;
+      transition: border-color 0.2s;
+    }
+    .search-box:focus-within { border-color: #374151; }
+    .search-box input {
+      border: none;
+      outline: none;
+      flex: 1;
+      font-size: 13px;
+      font-family: 'Inter', sans-serif;
+      background: transparent;
+    }
+    .search-box input::placeholder { color: #9ca3af; }
+
+    /* Cart / Profile icon buttons */
+    .icon-btn {
+      width: 44px;
+      height: 44px;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      color: #111;
+      cursor: pointer;
+      background: #fff;
+      transition: background 0.2s;
+      position: relative;
+    }
+    .icon-btn:hover { background: #f3f4f6; }
+
+    /* Cart item count badge */
+    .cart-count {
+      position: absolute;
+      top: -3px; right: -3px;
+      width: 17px; height: 17px;
+      background: #ef4444;
+      color: #fff;
+      border-radius: 50%;
+      font-size: 9px;
+      font-weight: 700;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Login tooltip that shows on hover of profile */
+    .login-tooltip {
+      display: none;
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      padding: 10px 18px;
+      font-size: 14px;
+      font-weight: 500;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      white-space: nowrap;
+      cursor: pointer;
+      z-index: 100;
+    }
+
+    /* ===========================
+       SEARCH DROPDOWN
+    =========================== */
+    .search-dropdown {
+      display: none;
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      width: 350px;
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+      padding: 16px;
+      z-index: 500;
+    }
+    .search-dropdown.show { display: block; }
+    .search-dropdown h6 { font-size: 15px; font-weight: 700; margin-bottom: 12px; }
+
+    /* Trending tag pills */
+    .trend-tag {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      font-size: 13px;
+      color: #374151;
+      cursor: pointer;
+      margin-bottom: 7px;
+      transition: background 0.15s;
+    }
+    .trend-tag:hover { background: #f9fafb; }
+    .trend-tag i { color: #9ca3af; font-size: 11px; }
+
+    /* ===========================
+       LOCATION MODAL
+    =========================== */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 2000;
+      align-items: flex-start;
+      justify-content: center;
+      padding-top: 60px;
+    }
+    .modal-overlay.open { display: flex; }
+
+    .modal-box {
+      background: #fff;
+      border-radius: 16px;
+      width: 90%;
+      max-width: 600px;
+      overflow: hidden;
+      position: relative;
+      animation: slideDown 0.25s ease;
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 12px; right: 12px;
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      background: #f3f4f6;
+      border: none;
+      font-size: 15px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-close:hover { background: #e5e7eb; }
+
+    .loc-search-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 20px;
+      border-bottom: 1px solid #f3f4f6;
+    }
+    .loc-search-row input {
+      flex: 1;
+      border: none;
+      outline: none;
+      font-size: 15px;
+      font-family: 'Inter', sans-serif;
+    }
+    .loc-search-row input::placeholder { color: #9ca3af; }
+
+    .use-location {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 20px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .use-location:hover { background: #f9fafb; }
+    .use-location span { font-size: 14px; font-weight: 600; color: #7c3aed; }
+    .use-location i { color: #7c3aed; font-size: 17px; }
+
+    .city-list { padding: 6px 0; display: none; }
+    .city-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 20px;
+      font-size: 13.5px;
+      color: #374151;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .city-item:hover { background: #f9fafb; }
+    .city-item i { color: #9ca3af; font-size: 12px; }
+
+    .powered-by { text-align: center; padding: 14px; font-size: 12px; color: #9ca3af; }
+    .powered-by b { font-size: 13px; }
+
+    /* ===========================
+       LOGIN MODAL
+    =========================== */
+    .login-modal-box {
+      background: #fff;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 400px;
+      padding: 32px 28px 26px;
+      position: relative;
+      animation: slideDown 0.25s ease;
+    }
+
+    .phone-icon {
+      width: 50px; height: 50px;
+      background: linear-gradient(135deg, #4f8ef7, #2563eb);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: #fff;
+      margin-bottom: 16px;
+    }
+
+    .phone-row {
+      display: flex;
+      border: 1.5px solid #d1d5db;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 12px;
+    }
+    .phone-code {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 11px 14px;
+      border-right: 1.5px solid #d1d5db;
+      font-size: 14px;
+      background: #f9fafb;
+      cursor: pointer;
+    }
+    .phone-row input {
+      flex: 1;
+      border: none;
+      outline: none;
+      padding: 11px 14px;
+      font-size: 14px;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .verify-box {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 10px;
+      padding: 11px 14px;
+      margin-bottom: 14px;
+    }
+    .spin {
+      width: 18px; height: 18px;
+      border: 2.5px solid #e5e7eb;
+      border-top-color: #059669;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .continue-btn {
+      width: 100%;
+      padding: 13px;
+      background: #e5e7eb;
+      color: #9ca3af;
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: not-allowed;
+      margin-bottom: 12px;
+      transition: all 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+    .continue-btn.ready { background: #111; color: #fff; cursor: pointer; }
+    .terms { font-size: 12px; color: #6b7280; text-align: center; }
+    .terms a { color: #111; font-weight: 600; text-decoration: underline; }
+
+    /* ===========================
+       CART PAGE (full screen)
+    =========================== */
+    .cart-page {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: #fff;
+      z-index: 3000;
+      flex-direction: column;
+    }
+    .cart-page.open { display: flex; }
+    .cart-header {
+      display: flex;
+      align-items: center;
+      padding: 18px 24px;
+      border-bottom: 1px solid #f3f4f6;
+    }
+    .back-btn {
+      width: 36px; height: 36px;
+      border: none;
+      background: none;
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+    }
+    .back-btn:hover { background: #f3f4f6; }
+    .cart-empty {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+    }
+    .cart-empty .cart-icon { font-size: 70px; }
+    .cart-empty h3 { font-size: 20px; font-weight: 700; }
+    .cart-empty p { font-size: 14px; color: #6b7280; }
+    .explore-btn {
+      border: 1.5px solid #e5e7eb;
+      border-radius: 10px;
+      padding: 10px 24px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #7c3aed;
+      background: #fff;
+      cursor: pointer;
+      margin-top: 6px;
+    }
+    .explore-btn:hover { background: #f5f3ff; }
+
+    /* ===========================
+       SUBCATEGORY MODAL (when clicking Women's / Men's Salon)
+    =========================== */
+    .subcat-box {
+      background: #fff;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 540px;
+      padding: 26px;
+      position: relative;
+      animation: slideDown 0.25s ease;
+    }
+    .subcat-box h2 { font-size: 22px; font-weight: 700; margin-bottom: 20px; }
+    .subcat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+
+    /* Each subcategory card */
+    .subcat-card {
+      background: #f7f7f7;
+      border-radius: 12px;
+      padding: 14px 8px 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.25s, box-shadow 0.25s, background 0.2s;
+    }
+    .subcat-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.09);
+      background: #fff;
+    }
+    .subcat-icon-box {
+      width: 66px;
+      height: 66px;
+      border-radius: 12px;
+      background: #eeeeee;
+      margin: 0 auto 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .subcat-icon-box img { width: 78%; height: 78%; object-fit: contain; }
+    .subcat-min {
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #059669;
+      color: #fff;
+      font-size: 9px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+    .subcat-name { font-size: 11.5px; font-weight: 500; color: #111; line-height: 1.35; margin-top: 6px; }
+
+    /* ===========================
+       INSTAHELP PAGE
+    =========================== */
+    .insta-page {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: #fff;
+      z-index: 3500;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+    .insta-page.open { display: flex; }
+
+    .insta-nav {
+      position: sticky;
+      top: 0;
+      background: #fff;
+      border-bottom: 1px solid #e5e7eb;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 0 24px;
+      height: 66px;
+      z-index: 10;
+    }
+
+    .insta-loc {
+      width: 240px;
+      height: 44px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 0 12px;
+      cursor: pointer;
+    }
+    .insta-loc span { font-size: 12.5px; flex: 1; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+
+    .insta-search {
+      flex: 1;
+      max-width: 460px;
+      height: 44px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 12px;
+    }
+    .insta-search input { border: none; outline: none; font-size: 13px; flex: 1; font-family: 'Inter', sans-serif; }
+
+    .insta-close {
+      margin-left: auto;
+      width: 38px; height: 38px;
+      border: none;
+      background: none;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .insta-body {
+      display: flex;
+      gap: 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 30px 24px;
+      width: 100%;
+    }
+
+    /* Left panel */
+    .insta-left { width: 260px; flex-shrink: 0; }
+    .insta-left h1 { font-size: 30px; font-weight: 700; margin-bottom: 6px; }
+    .rating-row { display: flex; align-items: center; gap: 6px; font-size: 13px; color: #374151; margin-bottom: 18px; }
+    .rating-row i { color: #fbbf24; }
+    .instant-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #059669;
+      color: #fff;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .in-mins { font-size: 13px; color: #374151; margin-bottom: 20px; }
+    .view-btn {
+      background: #7c3aed;
+      color: #fff;
+      border: none;
+      padding: 12px 22px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+    .view-btn:hover { background: #6d28d9; }
+
+    /* Center panel — service list */
+    .insta-center { flex: 1; }
+    .section-head { font-size: 22px; font-weight: 700; margin-bottom: 18px; }
+
+    .svc-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      border-bottom: 1px solid #f3f4f6;
+      padding: 18px 0;
+    }
+    .svc-info { flex: 1; }
+    .svc-title { font-size: 15px; font-weight: 600; margin-bottom: 5px; }
+    .svc-rating { display: flex; align-items: center; gap: 5px; font-size: 12px; color: #374151; margin-bottom: 4px; }
+    .svc-rating i { color: #7c3aed; font-size: 11px; }
+    .svc-price { font-size: 13px; font-weight: 600; }
+    .svc-price s { color: #9ca3af; font-weight: 400; margin-left: 4px; }
+    .view-details { color: #7c3aed; font-size: 13px; font-weight: 600; cursor: pointer; margin-top: 5px; display: inline-block; }
+
+    .svc-img-wrap {
+      width: 100px;
+      height: 100px;
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .svc-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+    .add-btn {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: #fff;
+      border: none;
+      border-top: 1px solid #e5e7eb;
+      padding: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+    }
+    .add-btn:hover { background: #f9fafb; }
+    .opt-note { font-size: 11px; color: #9ca3af; text-align: center; margin-top: 3px; }
+
+    /* Right panel — UC Promise + Cart */
+    .insta-right { width: 250px; flex-shrink: 0; }
+
+    .promise-card {
+      border: 1.5px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 18px;
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .promise-card h5 { font-size: 15px; font-weight: 700; margin-bottom: 12px; }
+    .promise-item { display: flex; align-items: center; gap: 8px; font-size: 13px; margin-bottom: 7px; }
+    .promise-item i { font-size: 11px; }
+    .quality-ring {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      border: 2px dashed #c4b5fd;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 8px;
+      font-weight: 700;
+      color: #7c3aed;
+      text-align: center;
+      flex-shrink: 0;
+      line-height: 1.2;
+    }
+    .quality-ring i { font-size: 11px; color: #7c3aed; margin-bottom: 2px; }
+
+    .no-cart {
+      border: 1.5px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 22px;
+      text-align: center;
+    }
+    .no-cart .icon { font-size: 42px; margin-bottom: 8px; }
+    .no-cart p { font-size: 13px; color: #9ca3af; }
+
+    /* ===========================
+       HERO SECTION
+    =========================== */
+    .hero {
+      max-width: 1380px;
+      margin: 0 auto;
+      padding: 38px 24px 34px;
+      display: flex;
+      gap: 28px;
+      align-items: flex-start;
+    }
+
+    /* LEFT side — 41% width */
+    .hero-left { width: 41%; flex-shrink: 0; }
+
+    /* Big heading */
+    .hero-heading {
+      font-size: 42px;
+      font-weight: 700;
+      color: #111;
+      line-height: 1.1;
+      letter-spacing: -1px;
+      margin-bottom: 0;
+    }
+
+    /* Stats row — 4.8 rating / 12M+ customers */
+    .stats-row { display: flex; gap: 28px; margin: 20px 0 24px; }
+    .stat { display: flex; align-items: center; gap: 9px; }
+    .stat i { font-size: 20px; color: #9ca3af; }
+    .stat-val { font-size: 19px; font-weight: 700; }
+    .stat-label { font-size: 11.5px; color: #9ca3af; }
+
+    /* White service card */
+    .service-card {
+      background: #fff;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 16px;
+      padding: 20px 18px 18px;
+    }
+
+    /* 4-column grid for services */
+    .services-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 9px; }
+
+    /* Each service item box */
+    .service-item {
+      background: #f7f7f7;
+      border-radius: 12px;
+      padding: 12px 6px 10px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.25s, box-shadow 0.25s, background 0.2s;
+      border: 1px solid transparent;
+    }
+    .service-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 7px 20px rgba(0,0,0,0.09);
+      background: #fff;
+      border-color: #e5e7eb;
+    }
+
+    /* Icon square inside service item */
+    .service-icon {
+      width: 66px;
+      height: 66px;
+      border-radius: 12px;
+      background: #eeeeee;
+      margin: 0 auto 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .service-icon img { width: 76%; height: 76%; object-fit: contain; }
+
+    /* Green "X mins" badge inside icon */
+    .min-badge {
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #059669;
+      color: #fff;
+      font-size: 9px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+
+    /* Service name below icon */
+    .service-name { font-size: 11px; font-weight: 500; color: #111; line-height: 1.35; margin-top: 16px; }
+
+    /* 9-dot grid SVG for "All services" */
+    .dots-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 5px; width: 30px; height: 30px; margin: 0 auto; }
+    .dot { width: 7px; height: 7px; border-radius: 50%; background: #374151; }
+
+    /* Divider line */
+    .card-divider { height: 1px; background: #efefef; margin: 16px 0; }
+    .card-section-title { font-size: 15px; font-weight: 700; margin-bottom: 12px; }
+
+    /* Native Smart Products row */
+    .products-row { display: flex; gap: 9px; }
+    .product-item {
+      background: #f7f7f7;
+      border-radius: 12px;
+      padding: 11px 8px;
+      text-align: center;
+      width: 96px;
+      cursor: pointer;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .product-item:hover { transform: translateY(-2px); box-shadow: 0 5px 14px rgba(0,0,0,0.08); }
+    .product-thumb {
+      width: 60px;
+      height: 60px;
+      border-radius: 10px;
+      margin: 0 auto 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .product-thumb img { width: 100%; height: 100%; object-fit: contain; }
+    .product-name { font-size: 11px; font-weight: 500; color: #111; line-height: 1.3; }
+
+    /* ===========================
+       RIGHT — IMAGE COLLAGE
+    =========================== */
+    .hero-right { flex: 1; }
+
+    /* 2x2 grid: left image tall (spans 2 rows), right has 2 stacked images */
+    .collage {
+      display: grid;
+      grid-template-columns: 1.05fr 1fr;
+      grid-template-rows: 240px 230px;
+      gap: 7px;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    .col-img { overflow: hidden; cursor: pointer; }
+    .col-img.tall { grid-row: span 2; }   /* Women Salon spans both rows */
+    .col-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+    .col-img img.loaded { opacity: 1; transition: opacity 0.4s, transform 0.5s; }
+    .col-img:hover img { transform: scale(1.04); }
+
+    /* ===========================
+       OFFERS & DISCOUNTS
+    =========================== */
+    .section-wrap { max-width: 1380px; margin: 0 auto; padding: 0 24px 50px; }
+    .section-title { font-size: 24px; font-weight: 700; margin-bottom: 18px; }
+
+    /* Horizontal scroll wrapper */
+    .h-scroll-wrap { position: relative; }
+    .h-scroll {
+      display: flex;
+      gap: 13px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      scroll-behavior: smooth;
+      scrollbar-width: none;
+    }
+    .h-scroll::-webkit-scrollbar { display: none; }
+
+    /* Arrow to scroll right */
+    .scroll-arrow {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 40px;
+      background: #fff;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.09);
+    }
+    .scroll-arrow:hover { background: #f3f4f6; }
+
+    /* Offer card */
+    .offer-card {
+      flex-shrink: 0;
+      width: 318px;
+      height: 185px;
+      border-radius: 14px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .offer-card:hover { transform: translateY(-4px); box-shadow: 0 10px 26px rgba(0,0,0,0.13); }
+    .offer-inner { display: flex; height: 100%; }
+    .offer-text { flex: 1; padding: 20px 16px; display: flex; flex-direction: column; justify-content: space-between; }
+    .offer-title { font-size: 17px; font-weight: 700; color: #fff; line-height: 1.3; }
+    .offer-sub { font-size: 11.5px; color: rgba(255,255,255,0.75); }
+    .offer-book-btn {
+      background: #111;
+      color: #fff;
+      padding: 7px 14px;
+      border-radius: 7px;
+      font-size: 12.5px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      align-self: flex-start;
+      transition: background 0.2s;
+    }
+    .offer-book-btn:hover { background: #374151; }
+    .offer-img-side { width: 155px; overflow: hidden; }
+    .offer-img-side img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+    .offer-img-side img.loaded { opacity: 1; }
+    .offer-card:hover .offer-img-side img { transform: scale(1.06); }
+
+    /* ===========================
+       SERVICE SCROLL CARDS
+    =========================== */
+    .svc-card {
+      flex-shrink: 0;
+      width: 208px;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+    .svc-card:hover { transform: translateY(-4px); }
+    .svc-card-img {
+      width: 208px;
+      height: 208px;
+      border-radius: 11px;
+      overflow: hidden;
+      margin-bottom: 10px;
+      background: #f3f4f6;
+    }
+    .svc-card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+    .svc-card-img img.loaded { opacity: 1; transition: opacity 0.4s, transform 0.5s; }
+    .svc-card:hover .svc-card-img img { transform: scale(1.06); }
+    .svc-card-name { font-size: 13px; font-weight: 600; margin-bottom: 4px; line-height: 1.35; }
+    .svc-card-meta { display: flex; align-items: center; gap: 5px; font-size: 11.5px; color: #374151; margin-bottom: 3px; }
+    .star { color: #fbbf24; font-size: 10.5px; }
+    .instant-tag { color: #059669; font-weight: 600; display: flex; align-items: center; gap: 3px; }
+    .svc-card-price { font-size: 13.5px; font-weight: 700; }
+    .old-price { font-size: 11.5px; color: #9ca3af; text-decoration: line-through; margin-left: 3px; }
+
+    /* ===========================
+       CATEGORY PRODUCT GRID
+    =========================== */
+    .cat-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 18px; }
+    .cat-title { font-size: 24px; font-weight: 700; }
+    .cat-sub { font-size: 12.5px; color: #6b7280; margin-top: 3px; }
+    .see-all-btn {
+      border: 1.5px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 7px 15px;
+      font-size: 12.5px;
+      font-weight: 500;
+      color: #7c3aed;
+      background: #fff;
+      cursor: pointer;
+      transition: background 0.18s;
+      margin-top: 3px;
+    }
+    .see-all-btn:hover { background: #f5f3ff; }
+
+    .product-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    .product-card { cursor: pointer; transition: transform 0.3s; }
+    .product-card:hover { transform: translateY(-4px); }
+    .product-card-img { border-radius: 11px; overflow: hidden; aspect-ratio: 1; background: #f3f4f6; margin-bottom: 10px; }
+    .product-card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+    .product-card-img img.loaded { opacity: 1; transition: opacity 0.4s, transform 0.5s; }
+    .product-card:hover .product-card-img img { transform: scale(1.06); }
+    .product-card-name { font-size: 13px; font-weight: 600; margin-bottom: 3px; line-height: 1.35; }
+    .product-card-rating { display: flex; align-items: center; gap: 4px; font-size: 11.5px; margin-bottom: 3px; }
+    .product-card-rating i { color: #fbbf24; font-size: 10.5px; }
+    .product-card-price { font-size: 13.5px; font-weight: 700; }
+
+    /* ===========================
+       FOOTER
+    =========================== */
+    footer {
+      background: #f9fafb;
+      padding: 40px 24px 22px;
+      margin-top: 16px;
+    }
+    .footer-inner { max-width: 1380px; margin: 0 auto; }
+    .footer-logo { display: flex; align-items: center; gap: 9px; margin-bottom: 28px; }
+    .footer-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 30px; margin-bottom: 28px; }
+    .footer-col-title { font-size: 15px; font-weight: 600; color: #111; margin-bottom: 14px; }
+    .footer-links { list-style: none; }
+    .footer-links li { margin-bottom: 10px; }
+    .footer-links a { font-size: 13.5px; color: #374151; transition: color 0.18s; }
+    .footer-links a:hover { color: #111; }
+    .social-row { display: flex; gap: 9px; margin-bottom: 18px; }
+    .social-btn {
+      width: 37px; height: 37px;
+      border-radius: 50%;
+      border: 1.5px solid #d1d5db;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: #374151;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .social-btn:hover { background: #111; color: #fff; border-color: #111; }
+    .app-store-btn {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      background: #111;
+      color: #fff;
+      padding: 10px 14px;
+      border-radius: 9px;
+      font-size: 12px;
+      margin-bottom: 9px;
+      cursor: pointer;
+      width: fit-content;
+      transition: background 0.2s;
+    }
+    .app-store-btn:hover { background: #374151; }
+    .app-store-btn i { font-size: 19px; }
+    .app-store-btn small { display: block; font-size: 9.5px; opacity: 0.7; }
+    .app-store-btn strong { display: block; font-size: 13px; font-weight: 600; }
+    .footer-bottom { border-top: 1px solid #e5e7eb; padding-top: 18px; font-size: 12px; color: #6b7280; }
+    .footer-bottom p { margin-bottom: 4px; }
+
+    /* ===========================
+       TOAST NOTIFICATION
+    =========================== */
+    #toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #111;
+      color: #fff;
+      padding: 12px 18px;
+      border-radius: 11px;
+      font-size: 13.5px;
+      font-weight: 500;
+      display: none;
+      align-items: center;
+      gap: 9px;
+      box-shadow: 0 6px 22px rgba(0,0,0,0.18);
+      z-index: 9999;
+      max-width: 300px;
+    }
+    #toast i { color: #22c55e; }
+
+    /* ===========================
+       SCROLL TO TOP BUTTON
+    =========================== */
+    #topBtn {
+      display: none;
+      position: fixed;
+      bottom: 80px;
+      right: 24px;
+      width: 40px;
+      height: 40px;
+      background: #111;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      font-size: 14px;
+      cursor: pointer;
+      z-index: 999;
+      box-shadow: 0 5px 16px rgba(0,0,0,0.18);
+    }
+    #topBtn:hover { background: #374151; }
+
+    /* Fade-up animation on scroll */
+    .fade-up { opacity: 1; transform: translateY(0); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .fade-up.fade-up-init { opacity: 0; transform: translateY(20px); }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    /* ===========================
+       RESPONSIVE — TABLET / MOBILE
+    =========================== */
+    @media (max-width: 1024px) {
+      .nav-center { display: none; }
+      .nav-hamburger { display: flex !important; }
+      .nav-links { display: none !important; }
+      .hero { flex-direction: column; }
+      .hero-left { width: 100%; }
+      .collage { grid-template-rows: 200px 190px; }
+      .product-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 600px) {
+      .hero { padding: 24px 14px 28px; }
+      .section-wrap { padding: 0 14px 40px; }
+      .hero-heading { font-size: 30px; }
+      .hero-stats { gap: 18px; margin: 16px 0 20px; }
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .collage { grid-template-rows: 130px 125px; }
+      .col-img.tall { grid-row: span 1; }
+      .offer-card { width: 260px; height: 160px; }
+      .svc-card { width: 160px; }
+      .svc-card-img { width: 160px; height: 160px; }
+      .product-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: 1fr; }
+      .subcat-grid { grid-template-columns: repeat(2, 1fr); }
+      .insta-body { flex-direction: column; }
+      .insta-left { width: 100%; }
+      .insta-right { width: 100%; }
+      #toast { bottom: 10px; right: 10px; left: 10px; }
+      #topBtn { bottom: 62px; right: 13px; }
+    }
+    /* ===========================
+       FULL PAGES: REVAMP / NATIVE / BEAUTY
+       These open when clicking the nav links
+    =========================== */
+    .full-page {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: #fff;
+      z-index: 5000;
+      overflow-y: auto;
+    }
+    .full-page.open { display: block; }
+
+    /* Page navbar - same style as main navbar */
+    .page-nav {
+      background: #fff;
+      border-bottom: 1px solid #e5e7eb;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .page-nav-inner {
+      max-width: 1380px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+    .page-nav-links { display: flex; align-items: center; gap: 2px; margin-right: auto; }
+    .page-nav-links a {
+      font-size: 13.5px;
+      font-weight: 500;
+      color: #374151;
+      padding: 6px 12px;
+      border-radius: 8px;
+    }
+    .page-nav-links a.active { font-weight: 700; color: #111; border-bottom: 2px solid #111; border-radius: 0; padding-bottom: 4px; }
+
+    .page-content { max-width: 1380px; margin: 0 auto; padding: 30px 24px 50px; }
+    .page-section-title { font-size: 22px; font-weight: 700; color: #111; margin-bottom: 18px; }
+
+    /* 3-column image grid (Revamp page) */
+    .img-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 40px; }
+    .img-card {
+      position: relative;
+      height: 280px;
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+    .img-card:hover { transform: translateY(-3px); }
+    .img-card img { width: 100%; height: 100%; object-fit: cover; }
+    .img-card .label {
+      position: absolute;
+      bottom: 16px;
+      left: 16px;
+      color: #fff;
+      font-size: 18px;
+      font-weight: 600;
+    }
+    /* Dark gradient overlay so text is readable */
+    .img-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.55));
+    }
+
+    /* Native product boxes */
+    .native-box-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; max-width: 760px; margin-bottom: 40px; }
+    .native-box {
+      background: #f7f7f7;
+      border-radius: 14px;
+      padding: 30px 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.25s;
+    }
+    .native-box:hover { transform: translateY(-3px); }
+    .native-box img { width: 110px; height: 110px; object-fit: contain; margin: 0 auto 16px; display: block; }
+    .native-box h4 { font-size: 18px; font-weight: 700; }
+
+    /* Native dark product card */
+    .native-dark-card {
+      background: linear-gradient(180deg, #1a1a1a 0%, #4a2010 100%);
+      border-radius: 14px;
+      padding: 24px;
+      color: #fff;
+      cursor: pointer;
+      transition: transform 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+    .native-dark-card:hover { transform: translateY(-3px); }
+    .native-dark-card h4 { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+    .native-dark-card p { font-size: 13px; color: rgba(255,255,255,0.8); margin-bottom: 14px; }
+    .native-dark-card img { width: 100%; max-width: 220px; display: block; margin: 0 auto; }
+    .arrow-circle {
+      position: absolute;
+      top: 18px; right: 18px;
+      width: 32px; height: 32px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 13px;
+    }
+
+    /* Light product card (Water Purifiers list) */
+    .light-prod-card {
+      background: #f0f0f0;
+      border-radius: 14px;
+      padding: 22px;
+      cursor: pointer;
+      transition: transform 0.25s;
+      position: relative;
+    }
+    .light-prod-card:hover { transform: translateY(-3px); }
+    .new-tag { font-size: 11px; font-weight: 700; color: #be185d; margin-bottom: 6px; }
+    .light-prod-card h4 { font-size: 17px; font-weight: 700; margin-bottom: 4px; }
+    .light-prod-card p { font-size: 12.5px; color: #6b7280; margin-bottom: 12px; }
+    .light-prod-card img { width: 100%; max-width: 200px; display: block; margin: 10px auto 0; }
+    .arrow-circle-light {
+      position: absolute;
+      top: 18px; right: 18px;
+      width: 32px; height: 32px;
+      background: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #111;
+      font-size: 13px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 40px; }
+    .grid-1 { display: grid; grid-template-columns: 1fr; max-width: 380px; margin-bottom: 40px; }
+
+    /* UC App service advantages boxes */
+    .advantage-box {
+      background: #f7f7f7;
+      border-radius: 14px;
+      padding: 24px;
+      height: 100%;
+    }
+    .advantage-box h4 { font-size: 18px; font-weight: 700; margin-bottom: 8px; line-height: 1.3; }
+    .advantage-box p { font-size: 13px; color: #6b7280; margin-bottom: 16px; }
+    .advantage-box img { width: 100%; height: 160px; object-fit: cover; border-radius: 10px; }
+    .india-map-icon { font-size: 70px; text-align: center; padding: 20px 0; }
+
+    /* Beauty page two-column hero */
+    .beauty-hero { display: flex; gap: 28px; padding: 30px 0 40px; align-items: flex-start; }
+    .beauty-left { width: 41%; flex-shrink: 0; }
+    .beauty-right { flex: 1; }
+    .beauty-collage {
+      display: grid;
+      grid-template-columns: 1.05fr 1fr;
+      grid-template-rows: 240px 230px;
+      gap: 7px;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .beauty-collage .col-img.tall { grid-row: span 2; }
+
+    /* Offer banner cards (used on Beauty page bottom) */
+    .offer-banner {
+      position: relative;
+      height: 260px;
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .offer-banner img { width: 100%; height: 100%; object-fit: cover; }
+    .offer-banner-tag {
+      position: absolute;
+      top: 14px; left: 14px;
+      background: #fff;
+      color: #111;
+      font-size: 10.5px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 5px;
+    }
+    .offer-banner-tag.green { background: #059669; color: #fff; }
+    .offer-banner-text {
+      position: absolute;
+      top: 50px; left: 16px;
+      max-width: 70%;
+    }
+    .offer-banner-text h5 { font-size: 17px; font-weight: 700; color: #fff; line-height: 1.3; margin-bottom: 4px; }
+    .offer-banner-text p { font-size: 12px; color: rgba(255,255,255,0.85); margin-bottom: 12px; }
+    .offer-banner-book {
+      background: #fff;
+      color: #111;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .page-close-btn {
+      position: fixed;
+      top: 18px; right: 24px;
+      width: 40px; height: 40px;
+      background: #fff;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      cursor: pointer;
+      z-index: 20;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    }
+    .page-close-btn:hover { background: #f3f4f6; }
+
+    @media (max-width: 900px) {
+      .img-grid-3, .grid-3 { grid-template-columns: 1fr; }
+      .native-box-grid { grid-template-columns: 1fr; }
+      .beauty-hero { flex-direction: column; }
+      .beauty-left { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===========================
+     TOAST NOTIFICATION
+=========================== -->
+<div id="toast">
+  <i class="fas fa-check-circle"></i>
+  <span id="toastText">Done!</span>
+</div>
+
+<!-- ===========================
+     SCROLL TO TOP BUTTON
+=========================== -->
+<button id="topBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <i class="fas fa-arrow-up"></i>
+</button>
+
+<!-- ===========================
+     MOBILE DRAWER OVERLAY
+=========================== -->
+<div id="mobileOverlay" onclick="closeMobileMenu()"
+     style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:1100"></div>
+
+<!-- ===========================
+     MOBILE DRAWER MENU
+=========================== -->
+<div id="mobileDrawer"
+     style="position:fixed;top:0;left:-280px;width:265px;height:100vh;background:#fff;z-index:1200;
+            transition:left 0.3s;padding:20px 16px;overflow-y:auto;box-shadow:4px 0 18px rgba(0,0,0,0.11);">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+    <div style="display:flex;align-items:center;gap:8px">
+      <div class="logo-box" style="width:34px;height:34px"><span style="font-size:11px">UC</span></div>
+      <div class="brand-name"><span class="top">Urban</span><span class="bot">Company</span></div>
+    </div>
+    <span style="font-size:19px;cursor:pointer" onclick="closeMobileMenu()"><i class="fas fa-times"></i></span>
+  </div>
+
+  <div onclick="setActiveLink('Revamp')" style="display:flex;align-items:center;gap:11px;padding:11px 9px;border-radius:9px;cursor:pointer;font-size:14px;font-weight:500;transition:background 0.18s" onmouseenter="this.style.background='#f3f4f6'" onmouseleave="this.style.background=''"><i class="fas fa-paint-roller" style="color:#6b7280;width:18px"></i>Revamp</div>
+  <div onclick="setActiveLink('Native')" style="display:flex;align-items:center;gap:11px;padding:11px 9px;border-radius:9px;cursor:pointer;font-size:14px;font-weight:500;transition:background 0.18s" onmouseenter="this.style.background='#f3f4f6'" onmouseleave="this.style.background=''"><i class="fas fa-leaf" style="color:#6b7280;width:18px"></i>Native</div>
+  <div onclick="setActiveLink('Beauty')" style="display:flex;align-items:center;gap:11px;padding:11px 9px;border-radius:9px;cursor:pointer;font-size:14px;font-weight:500;transition:background 0.18s" onmouseenter="this.style.background='#f3f4f6'" onmouseleave="this.style.background=''"><i class="fas fa-spa" style="color:#6b7280;width:18px"></i>Beauty</div>
+
+  <hr style="border-color:#f3f4f6;margin:9px 0">
+
+  <div onclick="openInstaPage()" style="display:flex;align-items:center;gap:11px;padding:11px 9px;border-radius:9px;cursor:pointer;font-size:14px;font-weight:500;transition:background 0.18s" onmouseenter="this.style.background='#f3f4f6'" onmouseleave="this.style.background=''"><i class="fas fa-bolt" style="color:#6b7280;width:18px"></i>InstaHelp</div>
+  <div onclick="openSubcat('Women\'s Salon & Spa')" style="display:flex;align-items:center;gap:11px;padding:11px 9px;border-radius:9px;cursor:pointer;font-size:14px;font-weight:500;transition:background 0.18s" onmouseenter="this.style.background='#f3f4f6'" onmouseleave="this.style.background=''"><i class="fas fa-female" style="color:#6b7280;width:18px"></i>Women's Salon & Spa</div>
+  <div onclick="openSubcat('Men\'s Salon & Massage')" style="display:flex;align-items:center;gap:11px;padding:11px 9px;border-radius:9px;cursor:pointer;font-size:14px;font-weight:500;transition:background 0.18s" onmouseenter="this.style.background='#f3f4f6'" onmouseleave="this.style.background=''"><i class="fas fa-male" style="color:#6b7280;width:18px"></i>Men's Salon & Massage</div>
+  <div onclick="showToast('Cleaning & Pest Control')" style="display:flex;align-items:center;gap:11px;padding:11px 9px;border-radius:9px;cursor:pointer;font-size:14px;font-weight:500;transition:background 0.18s" onmouseenter="this.style.background='#f3f4f6'" onmouseleave="this.style.background=''"><i class="fas fa-broom" style="color:#6b7280;width:18px"></i>Cleaning & Pest Control</div>
+
+  <hr style="border-color:#f3f4f6;margin:9px 0">
+
+  <div onclick="openCart()" style="display:flex;align-items:center;gap:11px;padding:11px 9px;border-radius:9px;cursor:pointer;font-size:14px;font-weight:500;transition:background 0.18s" onmouseenter="this.style.background='#f3f4f6'" onmouseleave="this.style.background=''"><i class="fas fa-shopping-bag" style="color:#6b7280;width:18px"></i>Cart</div>
+  <div onclick="openLoginModal()" style="display:flex;align-items:center;gap:11px;padding:11px 9px;border-radius:9px;cursor:pointer;font-size:14px;font-weight:500;transition:background 0.18s" onmouseenter="this.style.background='#f3f4f6'" onmouseleave="this.style.background=''"><i class="fas fa-user-circle" style="color:#6b7280;width:18px"></i>Login</div>
+</div>
+
+<!-- ===========================
+     LOCATION MODAL
+=========================== -->
+<div class="modal-overlay" id="locationModal" onclick="closeLocModal(event)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeLocationModal()"><i class="fas fa-times"></i></button>
+
+    <!-- Search bar inside modal -->
+    <div class="loc-search-row">
+      <i class="fas fa-arrow-left" style="cursor:pointer;color:#374151" onclick="closeLocationModal()"></i>
+      <input type="text" id="locSearchInput" placeholder="Search for your location/society/apartment"
+             oninput="if(this.value.length>0) document.getElementById('cityList').style.display='block';
+                      else document.getElementById('cityList').style.display='none';" />
+    </div>
+
+    <!-- Use current location -->
+    <div class="use-location" onclick="useCurrentLocation()">
+      <i class="fas fa-crosshairs"></i>
+      <span>Use current location</span>
+    </div>
+
+    <div style="height:1px;background:#f3f4f6;margin:0 20px"></div>
+
+    <!-- City list (shows when typing) -->
+    <div class="city-list" id="cityList">
+      <div class="city-item" onclick="setCity('Mumbai')"><i class="fas fa-map-marker-alt"></i> Mumbai</div>
+      <div class="city-item" onclick="setCity('Delhi')"><i class="fas fa-map-marker-alt"></i> Delhi</div>
+      <div class="city-item" onclick="setCity('Bangalore')"><i class="fas fa-map-marker-alt"></i> Bangalore</div>
+      <div class="city-item" onclick="setCity('Pune')"><i class="fas fa-map-marker-alt"></i> Pune</div>
+      <div class="city-item" onclick="setCity('Hyderabad')"><i class="fas fa-map-marker-alt"></i> Hyderabad</div>
+      <div class="city-item" onclick="setCity('Nagpur')"><i class="fas fa-map-marker-alt"></i> Nagpur</div>
+      <div class="city-item" onclick="setCity('Chennai')"><i class="fas fa-map-marker-alt"></i> Chennai</div>
+    </div>
+
+    <!-- Powered by Google -->
+    <div class="powered-by">
+      powered by
+      <b>
+        <span style="color:#4285f4">G</span><span style="color:#ea4335">o</span>
+        <span style="color:#fbbc04">o</span><span style="color:#34a853">g</span>
+        <span style="color:#4285f4">l</span><span style="color:#ea4335">e</span>
+      </b>
+    </div>
+  </div>
+</div>
+
+<!-- ===========================
+     LOGIN MODAL
+=========================== -->
+<div class="modal-overlay" id="loginModal" onclick="closeLoginModal(event)">
+  <div class="login-modal-box">
+    <button class="modal-close" onclick="closeLogin()"><i class="fas fa-times"></i></button>
+
+    <!-- Phone icon at top -->
+    <div class="phone-icon"><i class="fas fa-phone-alt"></i></div>
+
+    <h3 style="font-size:22px;font-weight:700;margin-bottom:8px">Enter your phone number</h3>
+    <p style="font-size:13px;color:#6b7280;margin-bottom:20px;line-height:1.5">
+      We'll send you a text with a verification code. Standard tariff may apply.
+    </p>
+
+    <!-- Phone number input -->
+    <div class="phone-row">
+      <div class="phone-code">+91 <i class="fas fa-chevron-down" style="font-size:10px;color:#9ca3af"></i></div>
+      <input type="tel" id="phoneInput" maxlength="10" placeholder="Enter your phone number" oninput="checkPhoneReady()" />
+    </div>
+
+    <!-- Cloudflare verifying row -->
+    <div class="verify-box">
+      <div style="display:flex;align-items:center;gap:10px;font-size:13.5px;color:#374151;font-weight:500">
+        <div class="spin"></div>
+        Verifying...
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:12px;font-weight:700;color:#f38020;letter-spacing:0.5px">CLOUDFLARE</div>
+        <div style="font-size:10px;color:#9ca3af">
+          <a href="#" style="color:#9ca3af">Privacy</a> •
+          <a href="#" style="color:#9ca3af">Help</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Continue button -->
+    <button class="continue-btn" id="continueBtn" onclick="handleContinue()">Continue</button>
+
+    <p class="terms">
+      By continuing, you agree to our <a href="#">T&C</a> and <a href="#">Privacy</a> policy.
+    </p>
+  </div>
+</div>
+
+<!-- ===========================
+     CART PAGE
+=========================== -->
+<div class="cart-page" id="cartPage">
+  <div class="cart-header">
+    <button class="back-btn" onclick="closeCart()"><i class="fas fa-arrow-left"></i></button>
+  </div>
+  <div class="cart-empty">
+    <div class="cart-icon">🛒</div>
+    <h3>Your cart is empty</h3>
+    <p>Lets add some services</p>
+    <button class="explore-btn" onclick="closeCart()">Explore services</button>
+  </div>
+</div>
+
+<!-- ===========================
+     SUBCATEGORY MODAL
+     (opens when clicking Women's Salon or Men's Salon)
+=========================== -->
+<div class="modal-overlay" id="subcatModal" onclick="closeSubcatModal(event)">
+  <div class="subcat-box">
+    <button class="modal-close" onclick="closeSubcat()"><i class="fas fa-times"></i></button>
+    <h2 id="subcatTitle">Women's Salon & Spa</h2>
+    <div class="subcat-grid" id="subcatGrid"></div>
+  </div>
+</div>
+
+<!-- ===========================
+     INSTAHELP PAGE
+=========================== -->
+<div class="insta-page" id="instaPage">
+  <!-- InstaHelp Navbar -->
+  <div class="insta-nav">
+    <div style="display:flex;align-items:center;gap:8px">
+      <div class="logo-box" style="width:36px;height:36px"><span style="font-size:11px">UC</span></div>
+      <div class="brand-name"><span class="top">Urban</span><span class="bot">Company</span></div>
+    </div>
+    <div class="insta-loc" onclick="showToast('Location')">
+      <i class="fas fa-map-marker-alt" style="color:#9ca3af;font-size:13px"></i>
+      <span>1201, Cliff Ave- Hiranandani …</span>
+      <i class="fas fa-chevron-down" style="color:#9ca3af;font-size:10px"></i>
+    </div>
+    <div class="insta-search">
+      <i class="fas fa-search" style="color:#9ca3af;font-size:13px"></i>
+      <input type="text" placeholder="Search in InstaHelp" />
+    </div>
+    <button class="insta-close" onclick="closeInstaPage()"><i class="fas fa-times"></i></button>
+  </div>
+
+  <!-- InstaHelp Body -->
+  <div class="insta-body">
+    <!-- Left: title, badge, button -->
+    <div class="insta-left">
+      <h1>InstaHelp</h1>
+      <div class="rating-row"><i class="fas fa-star"></i> 4.72 (7.6 M bookings)</div>
+      <div class="instant-badge"><i class="fas fa-bolt"></i> Instant</div>
+      <div class="in-mins">In 14 mins</div>
+      <button class="view-btn" onclick="showToast('Viewing all InstaHelp services')">View Services</button>
+    </div>
+
+    <!-- Center: service list -->
+    <div class="insta-center">
+      <div class="section-head">Instant</div>
+
+      <!-- Service 1 -->
+      <div class="svc-row">
+        <div class="svc-info">
+          <div class="svc-title">Insta help</div>
+          <div class="svc-rating"><i class="fas fa-circle" style="font-size:9px"></i> 4.71 (8.4M reviews)</div>
+          <div class="svc-price">Starts at ₹79 <s>₹245</s></div>
+          <span class="view-details" onclick="showToast('View details')">View details</span>
+        </div>
+        <div>
+          <div class="svc-img-wrap">
+            <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=300&q=80" alt="Instahelp" onload="this.classList.add('loaded')" />
+            <button class="add-btn" onclick="addToCart('Insta help', 79)">Add</button>
+          </div>
+          <div class="opt-note">6 options</div>
+        </div>
+      </div>
+
+      <!-- Service 2 -->
+      <div class="svc-row">
+        <div class="svc-info">
+          <div class="svc-title">Super saver pack</div>
+          <div class="svc-rating"><i class="fas fa-circle" style="font-size:9px"></i> 4.71 (8.4M reviews)</div>
+          <div class="svc-price">Starts at ₹79 <s>₹245</s> <span style="color:#374151;font-weight:400;font-size:12px">• 60 mins</span></div>
+          <span class="view-details" onclick="showToast('View details')">View details</span>
+        </div>
+        <div>
+          <div class="svc-img-wrap">
+            <img src="https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=300&q=80" alt="Super saver" onload="this.classList.add('loaded')" />
+            <button class="add-btn" onclick="addToCart('Super saver pack', 79)">Add</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-head" style="margin-top:22px">Later</div>
+
+      <!-- Service 3 -->
+      <div class="svc-row">
+        <div class="svc-info">
+          <div class="svc-title">Insta help</div>
+          <div class="svc-rating"><i class="fas fa-circle" style="font-size:9px"></i> 4.71 (8.4M reviews)</div>
+          <div class="svc-price">Starts at ₹79 <s>₹245</s> <span style="color:#374151;font-weight:400;font-size:12px">• 60 mins</span></div>
+          <span class="view-details" onclick="showToast('View details')">View details</span>
+        </div>
+        <div>
+          <div class="svc-img-wrap">
+            <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=300&q=80" alt="Instahelp" onload="this.classList.add('loaded')" />
+            <button class="add-btn" onclick="addToCart('Insta help (Later)', 79)">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: UC Promise + Cart -->
+    <div class="insta-right">
+      <div class="promise-card">
+        <div>
+          <h5>UC Promise</h5>
+          <div class="promise-item"><i class="fas fa-check"></i> Verified Professionals</div>
+          <div class="promise-item"><i class="fas fa-check"></i> Hassle Free Booking</div>
+          <div class="promise-item"><i class="fas fa-check"></i> Transparent Pricing</div>
+        </div>
+        <div class="quality-ring">
+          <i class="fas fa-check"></i>
+          QUALITY<br>ASSURED
+        </div>
+      </div>
+      <div class="no-cart">
+        <div class="icon">🛒</div>
+        <p>No items in your cart</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===========================
+     REVAMP PAGE
+     Opens when clicking "Revamp" in navbar
+=========================== -->
+<div class="full-page" id="revampPage">
+  <button class="page-close-btn" onclick="closePage('revampPage')"><i class="fas fa-times"></i></button>
+
+  <!-- Page's own navbar -->
+  <div class="page-nav">
+    <div class="page-nav-inner">
+      <div style="display:flex;align-items:center;gap:9px;margin-right:26px">
+        <div class="logo-box"><span>UC</span></div>
+        <div class="brand-name"><span class="top">Urban</span><span class="bot">Company</span></div>
+      </div>
+      <div class="page-nav-links">
+        <a href="#" class="active" onclick="return false">Revamp</a>
+        <a href="#" onclick="switchPage('revampPage','nativePage');return false">Native</a>
+        <a href="#" onclick="switchPage('revampPage','beautyPage');return false">Beauty</a>
+      </div>
+      <div class="location-box" style="margin-right:10px" onclick="openLocationModal()">
+        <i class="fas fa-map-marker-alt" style="color:#9ca3af;font-size:14px"></i>
+        <span>1201, Cliff Ave- …</span>
+        <i class="fas fa-chevron-down" style="color:#9ca3af;font-size:10px"></i>
+      </div>
+      <div style="display:flex;gap:8px">
+        <div class="icon-btn" onclick="openCart()"><i class="fas fa-shopping-bag"></i></div>
+        <div class="icon-btn" onclick="openLoginModal()"><i class="fas fa-user-circle"></i></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Page content -->
+  <div class="page-content">
+
+    <!-- Section 1: Explore by space -->
+    <h2 class="page-section-title">Explore by space</h2>
+    <div class="img-grid-3">
+      <div class="img-card" onclick="showToast('TV wall')">
+        <img src="https://images.unsplash.com/photo-1615874959474-d609969a20ed?w=500&q=80" alt="TV wall" />
+        <span class="label">TV wall</span>
+      </div>
+      <div class="img-card" onclick="showToast('Living room wall')">
+        <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=500&q=80" alt="Living room wall" />
+        <span class="label">Living room wall</span>
+      </div>
+      <div class="img-card" onclick="showToast('Bedroom wall')">
+        <img src="https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=500&q=80" alt="Bedroom wall" />
+        <span class="label">Bedroom wall</span>
+      </div>
+    </div>
+
+    <!-- Section 2: Beautiful walls for all your needs -->
+    <h2 class="page-section-title">Beautiful walls for all your needs</h2>
+    <div class="img-grid-3">
+      <div class="img-card" onclick="showToast('Upcoming family event')">
+        <img src="https://images.unsplash.com/photo-1543007630-9710e4a00a20?w=500&q=80" alt="Family event" />
+        <span class="label">Upcoming family event</span>
+      </div>
+      <div class="img-card" onclick="showToast('Home work space')">
+        <img src="https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?w=500&q=80" alt="Home work space" />
+        <span class="label">Home work space</span>
+      </div>
+      <div class="img-card" onclick="showToast('Seepage-proof walls')">
+        <img src="https://images.unsplash.com/photo-1620626011761-996317b8d101?w=500&q=80" alt="Seepage proof" />
+        <span class="label">Seepage-proof walls</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer (same as main page) -->
+  <div id="revampFooter"></div>
+</div>
+
+<!-- ===========================
+     NATIVE PAGE
+     Opens when clicking "Native" in navbar
+=========================== -->
+<div class="full-page" id="nativePage">
+  <button class="page-close-btn" onclick="closePage('nativePage')"><i class="fas fa-times"></i></button>
+
+  <div class="page-nav">
+    <div class="page-nav-inner">
+      <div style="display:flex;align-items:center;gap:9px;margin-right:26px">
+        <div class="logo-box"><span>UC</span></div>
+        <div class="brand-name"><span class="top">Urban</span><span class="bot">Company</span></div>
+      </div>
+      <div class="page-nav-links">
+        <a href="#" onclick="switchPage('nativePage','revampPage');return false">Revamp</a>
+        <a href="#" class="active" onclick="return false">Native</a>
+        <a href="#" onclick="switchPage('nativePage','beautyPage');return false">Beauty</a>
+      </div>
+      <div class="location-box" style="margin-right:10px" onclick="openLocationModal()">
+        <i class="fas fa-map-marker-alt" style="color:#9ca3af;font-size:14px"></i>
+        <span>1201, Cliff Ave- …</span>
+        <i class="fas fa-chevron-down" style="color:#9ca3af;font-size:10px"></i>
+      </div>
+      <div style="display:flex;gap:8px">
+        <div class="icon-btn" onclick="openCart()"><i class="fas fa-shopping-bag"></i></div>
+        <div class="icon-btn" onclick="openLoginModal()"><i class="fas fa-user-circle"></i></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-content">
+
+    <!-- Top 2 category boxes: Water Purifiers & Smart Locks -->
+    <div class="native-box-grid">
+      <div class="native-box" onclick="showToast('Water Purifiers')">
+        <img src="https://cdn3d.iconscout.com/3d/premium/thumb/water-purifier-3d-icon-download-in-png-blend-fbx-gltf-file-formats--filter-dispenser-clean-drinking-pack-household-icons-5578478.png?f=webp"
+             onerror="this.src='https://cdn-icons-png.flaticon.com/512/2534/2534205.png'" alt="Water Purifiers" />
+        <h4>Water Purifiers</h4>
+      </div>
+      <div class="native-box" onclick="showToast('Smart Locks')">
+        <img src="https://cdn3d.iconscout.com/3d/premium/thumb/smart-lock-3d-icon-download-in-png-blend-fbx-gltf-file-formats--door-security-digital-home-pack-smart-home-icons-10035765.png?f=webp"
+             onerror="this.src='https://cdn-icons-png.flaticon.com/512/1067/1067566.png'" alt="Smart Locks" />
+        <h4>Smart Locks</h4>
+      </div>
+    </div>
+
+    <!-- Newly launched: Native M2 Pro / M1 Pro -->
+    <h2 class="page-section-title">Newly launched</h2>
+    <div class="grid-3" style="grid-template-columns:repeat(2,1fr);max-width:760px">
+      <div class="native-dark-card" onclick="showToast('Native M2 Pro')">
+        <div class="arrow-circle"><i class="fas fa-arrow-right"></i></div>
+        <h4>Native M2 Pro</h4>
+        <p>In-built battery. Touch dispensing. Smart app.</p>
+        <img src="https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=300&q=80" alt="Native M2 Pro" />
+      </div>
+      <div class="native-dark-card" onclick="showToast('Native M1 Pro')">
+        <div class="arrow-circle"><i class="fas fa-arrow-right"></i></div>
+        <h4>Native M1 Pro</h4>
+        <p>Everything essential. Smart app.</p>
+        <img src="https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=300&q=80" alt="Native M1 Pro" />
+      </div>
+    </div>
+
+    <!-- Water Purifiers list: M1 Pro / M1 / M0 -->
+    <h2 class="page-section-title">Water Purifiers</h2>
+    <div class="grid-3">
+      <div class="light-prod-card" onclick="showToast('Native M1 Pro')">
+        <div class="arrow-circle-light"><i class="fas fa-arrow-right"></i></div>
+        <div class="new-tag">NEW</div>
+        <h4>Native M1 Pro</h4>
+        <p>Everything essential. Smart app.</p>
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGDZgg8Wf2FmgeMF_V9MYmUyt9oQYmu98LmbZ8L-gIOz0SdG_biKAim88&s" />
+      </div>
+      <div class="light-prod-card" onclick="showToast('Native M1')">
+        <div class="arrow-circle-light"><i class="fas fa-arrow-right"></i></div>
+        <h4>Native M1</h4>
+        <p>All the essentials you need</p>
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-y9MMgEuFszdZ5V6xHJSK9P6vfMoD98Sz48AL23GoZ46NDhehZbGbVoQ&s" alt="M1" />
+      </div>
+      <div class="light-prod-card" onclick="showToast('Native M0')">
+        <div class="arrow-circle-light"><i class="fas fa-arrow-right"></i></div>
+        <h4>Native M0</h4>
+        <p>Most value added RO</p>
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRm-b-lmhYn379y7ShXCnzgEPb0asiEYhJStjokD_XUMgKiZViiVoHu-Yg&s" alt="M0" />
+      </div>
+    </div>
+
+    <!-- Smart Door Locks -->
+    <h2 class="page-section-title">Smart Door Locks</h2>
+    <div class="grid-1">
+      <div class="light-prod-card" onclick="showToast('Native Lock Pro')">
+        <div class="arrow-circle-light"><i class="fas fa-arrow-right"></i></div>
+        <h4>Native Lock Pro</h4>
+        <p>Camera, doorbell, all-in-one.</p>
+        <img src="https://images.unsplash.com/photo-1622372738946-62e02505feb3?w=300&q=80" alt="Lock Pro" />
+      </div>
+    </div>
+
+    <!-- UC app service advantages -->
+    <h2 class="page-section-title">UC app service advantages</h2>
+    <div class="grid-3">
+      <div class="advantage-box">
+        <h4>Professional installation</h4>
+        <p>Only top technicians trained by UC.</p>
+        <img src="https://images.unsplash.com/photo-1621905251918-48416bd8575a?w=400&q=80" alt="Installation" />
+      </div>
+      <div class="advantage-box">
+        <h4>24×7 expert support</h4>
+        <p>Talk to experts who understand the product.</p>
+        <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=400&q=80" alt="Support" />
+      </div>
+      <div class="advantage-box">
+        <h4>Servicing 14,500+ pin codes</h4>
+        <p>We never outsource service to locals.</p>
+        <div class="india-map-icon">🗺️</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===========================
+     BEAUTY PAGE
+     Opens when clicking "Beauty" in navbar
+=========================== -->
+<div class="full-page" id="beautyPage">
+  <button class="page-close-btn" onclick="closePage('beautyPage')"><i class="fas fa-times"></i></button>
+
+  <div class="page-nav">
+    <div class="page-nav-inner">
+      <div style="display:flex;align-items:center;gap:9px;margin-right:26px">
+        <div class="logo-box"><span>UC</span></div>
+        <div class="brand-name"><span class="top">Urban</span><span class="bot">Company</span></div>
+      </div>
+      <div class="page-nav-links">
+        <a href="#" onclick="switchPage('beautyPage','revampPage');return false">Revamp</a>
+        <a href="#" onclick="switchPage('beautyPage','nativePage');return false">Native</a>
+        <a href="#" class="active" onclick="return false">Beauty</a>
+      </div>
+      <div class="location-box" style="margin-right:10px" onclick="openLocationModal()">
+        <i class="fas fa-map-marker-alt" style="color:#9ca3af;font-size:14px"></i>
+        <span>1201, Cliff Ave- …</span>
+        <i class="fas fa-chevron-down" style="color:#9ca3af;font-size:10px"></i>
+      </div>
+      <div class="search-box" style="width:260px;margin-right:10px">
+        <i class="fas fa-search" style="color:#9ca3af;font-size:14px"></i>
+        <input type="text" placeholder="Search for 'Waxing'" />
+      </div>
+      <div style="display:flex;gap:8px">
+        <div class="icon-btn" onclick="openCart()"><i class="fas fa-shopping-bag"></i></div>
+        <div class="icon-btn" onclick="openLoginModal()"><i class="fas fa-user-circle"></i></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-content">
+
+    <!-- Hero section: heading + service card + collage -->
+    <div class="beauty-hero">
+      <div class="beauty-left">
+        <h1 class="hero-heading" style="font-size:38px">Beauty services at your doorstep</h1>
+
+        <!-- Service card with 6 beauty categories -->
+        <div class="service-card" style="margin-top:20px">
+          <div class="services-grid" style="grid-template-columns:repeat(3,1fr)">
+            <div class="service-item" onclick="openSubcat('Women\'s Salon & Spa')">
+              <div class="service-icon">
+                <img src="https://cdn3d.iconscout.com/3d/premium/thumb/spa-woman-3d-icon-download-in-png-blend-fbx-gltf-file-formats--girl-beauty-facial-mask-pack-people-icons-9232704.png?f=webp"
+                     onerror="this.src='https://em-content.zobj.net/source/apple/391/woman-getting-massage_1f486-200d-2640-fe0f.png'" alt="" />
+              </div>
+              <div class="service-name">Salon for Women</div>
+            </div>
+            <div class="service-item" onclick="showToast('Spa for Women')">
+              <div class="service-icon">
+                <img src="https://cdn3d.iconscout.com/3d/premium/thumb/massage-table-3d-icon-download-in-png-blend-fbx-gltf-file-formats--spa-bed-beauty-relaxation-pack-sports-icons-5642311.png?f=webp"
+                     onerror="this.src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwnNU-MTm2Q69AMpuoY8lCJubuwhhdczz4SPQc08aL5gXjhB8NIrAZO3M&s'" alt="" />
+              </div>
+              <div class="service-name">Spa for Women</div>
+            </div>
+            <div class="service-item" onclick="showToast('Hair Studio for Women')">
+              <div class="service-icon">
+                <img src="https://cdn3d.iconscout.com/3d/premium/thumb/hair-dryer-3d-icon-download-in-png-blend-fbx-gltf-file-formats--beauty-salon-blow-hairdryer-pack-tools-equipment-icons-5567512.png?f=webp"
+                     onerror="this.src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwpNO1z-mnADX_ugcv-veGUBxFTZICwVTP9EATGrjAYN5Q5MZxRp99p_c&s'" alt="" />
+              </div>
+              <div class="service-name">Hair Studio for Women</div>
+            </div>
+            <div class="service-item" onclick="showToast('Makeup, Saree & Styling')">
+              <div class="service-icon">
+                <img src="https://cdn3d.iconscout.com/3d/premium/thumb/lipstick-3d-icon-download-in-png-blend-fbx-gltf-file-formats--makeup-beauty-cosmetic-pack-healthcare-icons-5642391.png?f=webp"
+                     onerror="this.src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwpNO1z-mnADX_ugcv-veGUBxFTZICwVTP9EATGrjAYN5Q5MZxRp99p_c&s'" alt="" />
+              </div>
+              <div class="service-name">Makeup, Saree &amp; Styling</div>
+            </div>
+            <div class="service-item" onclick="openSubcat('Men\'s Salon & Massage')">
+              <div class="service-icon">
+                <img src="https://cdn3d.iconscout.com/3d/premium/thumb/man-shaving-3d-icon-download-in-png-blend-fbx-gltf-file-formats--beard-shave-male-grooming-pack-people-icons-9232715.png?f=webp"
+                     onerror="this.src='https://em-content.zobj.net/source/apple/391/man-getting-haircut_1f487-200d-2642-fe0f.png'" alt="" />
+              </div>
+              <div class="service-name">Salon for Men</div>
+            </div>
+            <div class="service-item" onclick="showToast('Massage for Men')">
+              <div class="service-icon">
+                <img src="https://cdn3d.iconscout.com/3d/premium/thumb/massage-table-3d-icon-download-in-png-blend-fbx-gltf-file-formats--spa-bed-beauty-relaxation-pack-sports-icons-5642311.png?f=webp"
+                     onerror="this.src='data:image/jpeg;base64,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'" alt="" />
+              </div>
+              <div class="service-name">Massage for Men</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stats row: 4.8 rating + 12M+ customers -->
+        <div class="stats-row" style="margin-top:20px">
+          <div class="stat">
+            <i class="far fa-star"></i>
+            <div><div class="stat-val">4.8</div><div class="stat-label">Service Rating*</div></div>
+          </div>
+          <div class="stat">
+            <i class="fas fa-users"></i>
+            <div><div class="stat-val">12M+</div><div class="stat-label">Customers Globally*</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right collage: 4 beauty photos -->
+      <div class="beauty-right">
+        <div class="beauty-collage">
+          <div class="col-img tall">
+            <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=800&q=85" alt="Women Salon" onload="this.classList.add('loaded')" />
+          </div>
+          <div class="col-img">
+            <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=700&q=85" alt="Massage" onload="this.classList.add('loaded')" />
+          </div>
+          <div class="col-img">
+            <img src="https://images.unsplash.com/photo-1605497788044-5a32c7078486?w=700&q=85" alt="Men Haircut" onload="this.classList.add('loaded')" />
+          </div>
+          <div class="col-img">
+            <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=700&q=85" alt="Hair Styling" onload="this.classList.add('loaded')" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom offer banners -->
+    <h2 class="page-section-title">Offers for you</h2>
+    <div class="grid-3">
+      <div class="offer-banner" onclick="addToCart('Japanese glow rituals',1500)">
+        <img src="https://images.unsplash.com/photo-1570554886111-e80fcca6a029?w=400&q=80" alt="Facial" />
+        <div class="offer-banner-tag">New launch</div>
+        <div class="offer-banner-text">
+          <h5>Japanese glow rituals</h5>
+          <p>Now at your doorstep</p>
+          <button class="offer-banner-book">Book now</button>
+        </div>
+      </div>
+      <div class="offer-banner" onclick="addToCart('Full arms legs waxing',899)">
+        <img src="https://images.unsplash.com/photo-1559599101-f09722fb4948?w=400&q=80" alt="Waxing" />
+        <div class="offer-banner-tag green">Price drop</div>
+        <div class="offer-banner-text">
+          <h5>Full arms, legs &amp; underarms waxing</h5>
+          <p>₹899 <s style="color:rgba(255,255,255,0.6)">₹1,198</s></p>
+          <button class="offer-banner-book">Book now</button>
+        </div>
+      </div>
+      <div class="offer-banner" onclick="addToCart('Swedish stress relief massage',1200)">
+        <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=400&q=80" alt="Massage" />
+        <div class="offer-banner-text">
+          <h5>Let go of that built-up stress</h5>
+          <p>Swedish stress relief massage</p>
+          <button class="offer-banner-book">Book now</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===========================
+     NAVBAR
+=========================== -->
+<nav class="navbar">
+
+  <div style="max-width:1380px;width:100%;margin:0 auto;padding:0 24px;display:flex;align-items:center;gap:0">
+
+    <!-- Logo -->
+    <div style="display:flex;align-items:center;gap:9px;flex-shrink:0;margin-right:26px;cursor:pointer" onclick="showToast('Urban Company')">
+      <div class="logo-box"><span>UC</span></div>
+      <div class="brand-name">
+        <div class="top">Urban</div>
+        <div class="bot">Company</div>
+      </div>
+    </div>
+
+    <!-- Nav Links: Revamp / Native / Beauty -->
+    <div class="nav-links" style="display:flex;align-items:center;gap:2px;margin-right:auto">
+      <a href="#" class="active" id="link-Revamp" onclick="setActiveLink('Revamp');return false">Revamp</a>
+      <a href="#" id="link-Native" onclick="setActiveLink('Native');return false">Native</a>
+      <a href="#" id="link-Beauty" onclick="setActiveLink('Beauty');return false">Beauty</a>
+    </div>
+
+    <!-- Center: Location + Search -->
+    <div class="nav-center" style="display:flex;align-items:center;gap:10px">
+      <!-- Location box -->
+      <div class="location-box" onclick="openLocationModal()">
+        <i class="fas fa-map-marker-alt" style="color:#9ca3af;font-size:14px;flex-shrink:0"></i>
+        <span id="locationText">1201, Cliff Ave- …</span>
+        <i class="fas fa-chevron-down" style="color:#9ca3af;font-size:10px;flex-shrink:0"></i>
+      </div>
+
+      <!-- Search box -->
+      <div class="search-box">
+        <i class="fas fa-search" style="color:#9ca3af;font-size:14px;flex-shrink:0"></i>
+        <input type="text" id="searchInput" placeholder="Search for 'Facial'" autocomplete="off"
+               onfocus="showSearchDrop()" oninput="filterSearch(this.value)" />
+        <!-- Trending search dropdown -->
+        <div class="search-dropdown" id="searchDropdown">
+          <h6>Trending searches</h6>
+          <div id="trendingList">
+            <div class="trend-tag" onclick="selectSearch('Salon')"><i class="fas fa-chart-line"></i>Salon</div>
+            <div class="trend-tag" onclick="selectSearch('Professional bathroom cleaning')"><i class="fas fa-chart-line"></i>Professional bathroom cleaning</div>
+            <div class="trend-tag" onclick="selectSearch('Professional kitchen cleaning')"><i class="fas fa-chart-line"></i>Professional kitchen cleaning</div>
+            <div class="trend-tag" onclick="selectSearch('Massage for men')"><i class="fas fa-chart-line"></i>Massage for men</div>
+            <div class="trend-tag" onclick="selectSearch('Washing machine repair')"><i class="fas fa-chart-line"></i>Washing machine repair</div>
+            <div class="trend-tag" onclick="selectSearch('Full home cleaning')"><i class="fas fa-chart-line"></i>Full home cleaning</div>
+            <div class="trend-tag" onclick="selectSearch('Ro repair')"><i class="fas fa-chart-line"></i>Ro repair</div>
+            <div class="trend-tag" onclick="selectSearch('Refrigerator repair')"><i class="fas fa-chart-line"></i>Refrigerator repair</div>
+          </div>
+          <div style="display:flex;gap:7px;margin-top:0">
+            <div class="trend-tag" onclick="selectSearch('Spa luxe')" style="margin-bottom:0"><i class="fas fa-chart-line"></i>Spa luxe</div>
+            <div class="trend-tag" onclick="selectSearch('Tv repair')" style="margin-bottom:0"><i class="fas fa-chart-line"></i>Tv repair</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Icons: Cart + Profile -->
+    <div style="display:flex;align-items:center;gap:8px;margin-left:18px;position:relative">
+      <!-- Cart -->
+      <div class="icon-btn" onclick="openCart()">
+        <i class="fas fa-shopping-bag"></i>
+        <span class="cart-count" id="cartCount">0</span>
+      </div>
+      <!-- Profile (hover shows Login, click opens login modal) -->
+      <div style="position:relative"
+           onmouseenter="document.getElementById('loginTip').style.display='block'"
+           onmouseleave="document.getElementById('loginTip').style.display='none'">
+        <div class="icon-btn" onclick="openLoginModal()">
+          <i class="fas fa-user-circle"></i>
+        </div>
+        <div id="loginTip" class="login-tooltip" onclick="openLoginModal()">Login</div>
+      </div>
+      <!-- Hamburger (mobile only) -->
+      <div class="icon-btn nav-hamburger" style="display:none" onclick="openMobileMenu()">
+        <i class="fas fa-bars"></i>
+      </div>
+    </div>
+
+  </div>
+</nav>
+
+<!-- ===========================
+     HERO SECTION
+=========================== -->
+<div class="hero">
+
+  <!-- LEFT COLUMN -->
+  <div class="hero-left">
+    <h1 class="hero-heading">Home services at your doorstep</h1>
+
+    <!-- 4.8 Rating + 12M+ Customers -->
+    <div class="stats-row">
+      <div class="stat">
+        <i class="far fa-star"></i>
+        <div>
+          <div class="stat-val">4.8</div>
+          <div class="stat-label">Service Rating*</div>
+        </div>
+      </div>
+      <div class="stat">
+        <i class="fas fa-users"></i>
+        <div>
+          <div class="stat-val">12M+</div>
+          <div class="stat-label">Customers Globally*</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BIG SERVICE CARD -->
+    <div class="service-card">
+      <div class="services-grid">
+
+        <!-- 1. InstaHelp — woman with headset -->
+        <div class="service-item" onclick="openInstaPage()">
+          <div class="service-icon">
+            <img src="https://cdn3d.iconscout.com/3d/premium/thumb/customer-care-3d-icon-download-in-png-blend-fbx-gltf-file-formats--girl-service-support-pack-business-icons-5795743.png?f=webp"
+                 onerror="this.src='https://cdn-icons-png.flaticon.com/512/6596/6596121.png'"
+                 alt="InstaHelp" />
+            <span class="min-badge">14 mins</span>
+          </div>
+          <div class="service-name">InstaHelp</div>
+        </div>
+
+        <!-- 2. Women's Salon — woman with GREEN face mask & white towel on head -->
+        <div class="service-item" onclick="openSubcat('Women\'s Salon & Spa')">
+          <div class="service-icon">
+            <img src="https://cdn3d.iconscout.com/3d/premium/thumb/spa-woman-3d-icon-download-in-png-blend-fbx-gltf-file-formats--girl-beauty-facial-mask-pack-people-icons-9232704.png?f=webp"
+                 onerror="this.src='https://em-content.zobj.net/source/apple/391/woman-getting-massage_1f486-200d-2640-fe0f.png'"
+                 alt="Women Salon" />
+            <span class="min-badge">55 mins</span>
+          </div>
+          <div class="service-name">Women's Salon &amp; Spa</div>
+        </div>
+
+        <!-- 3. Men's Salon — man with brown hair & white shaving foam/beard -->
+        <div class="service-item" onclick="openSubcat('Men\'s Salon & Massage')">
+          <div class="service-icon">
+            <img src="https://cdn3d.iconscout.com/3d/premium/thumb/man-shaving-3d-icon-download-in-png-blend-fbx-gltf-file-formats--beard-shave-male-grooming-pack-people-icons-9232715.png?f=webp"
+                 onerror="this.src='https://em-content.zobj.net/source/apple/391/man-getting-haircut_1f487-200d-2642-fe0f.png'"
+                 alt="Men Salon" />
+            <span class="min-badge">30 mins</span>
+          </div>
+          <div class="service-name">Men's Salon &amp; Massage</div>
+        </div>
+
+        <!-- 4. Cleaning — red vacuum cleaner -->
+        <div class="service-item" onclick="showToast('Cleaning & Pest Control')">
+          <div class="service-icon">
+            <img src="https://cdn3d.iconscout.com/3d/premium/thumb/vacuum-cleaner-3d-icon-download-in-png-blend-fbx-gltf-file-formats--cleaning-household-appliance-home-machine-pack-tools-equipment-icons-6455432.png?f=webp"
+                 onerror="this.src='https://cdn-icons-png.flaticon.com/512/2617/2617819.png'"
+                 alt="Cleaning" />
+            <span class="min-badge">25 mins</span>
+          </div>
+          <div class="service-name">Cleaning &amp; Pest Control</div>
+        </div>
+
+        <!-- 5. Wall Makeover — wood wall panels -->
+        <div class="service-item" onclick="showToast('Wall Makeover by Revamp')">
+          <div class="service-icon">
+            <img src="https://cdn3d.iconscout.com/3d/premium/thumb/wood-flooring-3d-icon-download-in-png-blend-fbx-gltf-file-formats--floor-parquet-wooden-pack-construction-icons-5201382.png?f=webp"
+                 onerror="this.src='https://cdn-icons-png.flaticon.com/512/4305/4305512.png'"
+                 alt="Wall Makeover" />
+          </div>
+          <div class="service-name">Wall Makeover by Revamp</div>
+        </div>
+
+        <!-- 6. Painting — yellow paint roller -->
+        <div class="service-item" onclick="showToast('Painting & Water-proofing')">
+          <div class="service-icon">
+            <img src="https://cdn3d.iconscout.com/3d/premium/thumb/paint-roller-3d-icon-download-in-png-blend-fbx-gltf-file-formats--painting-brush-color-tools-pack-construction-icons-5788382.png?f=webp"
+                 onerror="this.src='https://cdn-icons-png.flaticon.com/512/2491/2491782.png'"
+                 alt="Painting" />
+          </div>
+          <div class="service-name">Painting &amp; Water&#8209;proofing</div>
+        </div>
+
+        <!-- 7. AC Repair — white AC unit -->
+        <div class="service-item" onclick="showToast('AC & Appliance Repair')">
+          <div class="service-icon">
+            <img src="https://cdn3d.iconscout.com/3d/premium/thumb/air-conditioner-3d-icon-download-in-png-blend-fbx-gltf-file-formats--ac-conditioning-cool-home-appliance-pack-household-icons-6247990.png?f=webp"
+                 onerror="this.src='data:image/jpeg;base64,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'"
+                 alt="AC Repair" />
+            <span class="min-badge">44 mins</span>
+          </div>
+          <div class="service-name">AC &amp; Appliance Repair</div>
+        </div>
+
+        <!-- 8. Electrician — red+blue crossed tools -->
+        <div class="service-item" onclick="showToast('Electrician, Plumber & Carpenter')">
+          <div class="service-icon">
+            <img src="https://cdn3d.iconscout.com/3d/premium/thumb/repair-tool-3d-icon-download-in-png-blend-fbx-gltf-file-formats--fix-service-toolkit-wrench-screwdriver-pack-tools-equipment-icons-10558436.png?f=webp"
+                 onerror="this.src='data:image/jpeg;base64,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'"
+                 alt="Electrician" />
+            <span class="min-badge">19 mins</span>
+          </div>
+          <div class="service-name">Electrician, Plumber &amp; Carpenter</div>
+        </div>
+
+      </div>
+
+      <!-- Divider -->
+      <div class="card-divider"></div>
+
+      <!-- Native Smart Products -->
+      <div class="card-section-title">Native Smart Products</div>
+      <div class="products-row">
+
+        <!-- Water Purifier — dark device -->
+        <div class="product-item" onclick="showToast('Native Water Purifier')">
+          <div class="product-thumb" style="background:#1c1c1e;border-radius:10px">
+            <img src="https://cdn3d.iconscout.com/3d/premium/thumb/water-purifier-3d-icon-download-in-png-blend-fbx-gltf-file-formats--filter-dispenser-clean-drinking-pack-household-icons-5578478.png?f=webp"
+                 onerror="this.src='https://cdn-icons-png.flaticon.com/512/2534/2534205.png'"
+                 alt="Water Purifier" />
+          </div>
+          <div class="product-name">Native Water Purifier</div>
+        </div>
+
+        <!-- Smart Locks — dark digital lock -->
+        <div class="product-item" onclick="showToast('Native Smart Locks')">
+          <div class="product-thumb" style="background:#2c2c2e;border-radius:10px">
+            <img src="https://cdn3d.iconscout.com/3d/premium/thumb/smart-lock-3d-icon-download-in-png-blend-fbx-gltf-file-formats--door-security-digital-home-pack-smart-home-icons-10035765.png?f=webp"
+                 onerror="this.src='data:image/png;base64,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'"
+                 alt="Smart Locks" />
+          </div>
+          <div class="product-name">Native Smart Locks</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT COLUMN — 4 Photos Collage -->
+  <div class="hero-right">
+    <div class="collage">
+      <!-- Top-left TALL: Women's Salon (spans 2 rows) -->
+      <div class="col-img tall">
+        <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=800&q=85"
+             alt="Women Salon" onload="this.classList.add('loaded')" />
+      </div>
+      <!-- Top-right: Massage -->
+      <div class="col-img">
+        <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=700&q=85"
+             alt="Massage" onload="this.classList.add('loaded')" />
+      </div>
+      <!-- Bottom-left: Home Repair -->
+      <div class="col-img">
+        <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=700&q=85"
+             alt="Home Repair" onload="this.classList.add('loaded')" />
+      </div>
+      <!-- Bottom-right: AC Service -->
+      <div class="col-img">
+        <img src="https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=700&q=85"
+             alt="AC Service" onload="this.classList.add('loaded')" />
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===========================
+     OFFERS & DISCOUNTS
+=========================== -->
+<div class="section-wrap">
+  <h2 class="section-title">Offers &amp; discounts</h2>
+  <div class="h-scroll-wrap">
+    <div class="h-scroll" id="offersRow">
+
+      <div class="offer-card" onclick="addToCart('Sofa Deep Cleaning', 569)">
+        <div class="offer-inner">
+          <div class="offer-text" style="background:#3d2b1c">
+            <div class="offer-title">Sofa deep cleaning starting at ₹569</div>
+            <button class="offer-book-btn">Book now</button>
+          </div>
+          <div class="offer-img-side">
+            <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&q=80" alt="Sofa" onload="this.classList.add('loaded')" />
+          </div>
+        </div>
+      </div>
+
+      <div class="offer-card" onclick="addToCart('Bathroom Cleaning', 299)">
+        <div class="offer-inner">
+          <div class="offer-text" style="background:#0d5c63">
+            <div class="offer-title">Shine your bathroom deserves</div>
+            <button class="offer-book-btn">Book now</button>
+          </div>
+          <div class="offer-img-side">
+            <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=400&q=80" alt="Bathroom" onload="this.classList.add('loaded')" />
+          </div>
+        </div>
+      </div>
+
+      <div class="offer-card" onclick="addToCart('Spa for Women', 799)">
+        <div class="offer-inner">
+          <div class="offer-text" style="background:#3b4f2a">
+            <div class="offer-title">Relax &amp; rejuvenate at home</div>
+            <div class="offer-sub">Spa for women</div>
+            <button class="offer-book-btn">Book now</button>
+          </div>
+          <div class="offer-img-side">
+            <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=400&q=80" alt="Spa" onload="this.classList.add('loaded')" />
+          </div>
+        </div>
+      </div>
+
+      <div class="offer-card" onclick="addToCart('Hair Treatment', 699)">
+        <div class="offer-inner">
+          <div class="offer-text" style="background:#2d1b69">
+            <div class="offer-title">Premium hair care at ₹699</div>
+            <button class="offer-book-btn">Book now</button>
+          </div>
+          <div class="offer-img-side">
+            <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=400&q=80" alt="Hair" onload="this.classList.add('loaded')" />
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="scroll-arrow" onclick="scrollRow('offersRow', 340)">
+      <i class="fas fa-arrow-right" style="font-size:12px;color:#374151"></i>
+    </div>
+  </div>
+</div>
+
+<!-- ===========================
+     MOST BOOKED SERVICES
+=========================== -->
+<div class="section-wrap">
+  <h2 class="section-title">Most booked services</h2>
+  <div class="h-scroll-wrap">
+    <div class="h-scroll" id="mostBooked">
+      <div class="svc-card fade-up" onclick="addToCart('Foam-jet AC service', 699)">
+        <div class="svc-card-img"><img src="https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=450&q=80" alt="AC" onload="this.classList.add('loaded')" /></div>
+        <div class="svc-card-name">Foam-jet AC service</div>
+        <div class="svc-card-meta"><span class="star"><i class="fas fa-star"></i></span> 4.76 <span style="color:#d1d5db">•</span><span class="instant-tag"><i class="fas fa-bolt"></i>Instant</span></div>
+        <div class="svc-card-price">₹699</div>
+      </div>
+      <div class="svc-card fade-up" onclick="addToCart('AC repair', 299)">
+        <div class="svc-card-img"><img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAJQAwAMBIgACEQEDEQH/xAAcAAACAgMBAQAAAAAAAAAAAAAFBgMEAAIHAQj/xABDEAACAQMCAwUFBQUGBAcAAAABAgMABBEFIQYSMRNBUWFxFCKBkaEHIzJCwTNSseHwFUNicpLRJDSC8RYlU1RjorL/xAAbAQACAwEBAQAAAAAAAAAAAAABBAACAwUGB//EAC0RAAICAgIBAwIDCQAAAAAAAAABAgMEESExEhMiQQUyM1FhFCNCcYGhscHw/9oADAMBAAIRAxEAPwCSz+1jU7ORE1nTIp4G2a4t+ZeX1GCPlT9pPEmnavaxzwRv2TnCuMMpPqP1FfNy3Wo8wbacjoSAx+fWmXgLiSbT9ce1nXs7a+XkdNwFk3KuM9O8H1o6Bs73Dc2F1/y16h7sE4+FbS6erDeNDnoQMVzj7TdRveHNZ09tJuZIo57ctJATzoSMAYU5x8KD2X2jXaKVkiWN89IDyfQ7fSgE6jNpanoXQ+DDIqpLp0qqcFWHkaXdL+0uxdQlzLNz/wDyxKfquKMw8c6FPIsbOC5712PybH8ahCtcQtGcOCp7sjFQSlwwwe6mi3nt7vcPGUIyuGzn6V5LpkEy82Bv3pUILUAkc4C5PpUkkUjsY5AoQ7MveRRePSEgd3WcAEYPOcACoz7Ngi2SS7fuFuvMP9XT61CAywaWGVoBLLlAChLk8yHofmCPhREmSZQJV6fmGxrLKwmN09zcosTSKsccQbm5VBPU+JJ+gqzJE42BoBKkkHvFzI2Om7VVluRZqOwlmznrG/T1HQ0TTSri4OcEL+81DOLLO60fTkuoDDIvPytzISV2Jz4Y2oN6RaK29FG84qvbeXEKG4LHIWQgD44G3wo1Y38t7bxTXlstvIwP4G51OD6ZBpN4cE17de1XUhLMQU2x7tO1mhijCjoCcYrCNjctDFlUYw38hKCMMAan7EVHb9KtUwKkPY1nY1LXuD4H5VCEPY1nY1Mdjg1lQhD2NZ2NTVlQh8mGIHcKympbZnWVOWQkggqjH3cjyolLp8IyBLPF5SKCflkVDHZ8t3FyTo45u9CD8un1rVowTCH2gXcl/rcU/aySRGzt2iVnJCBolPujuB8qXFnmTA535c9DuKPatA8q6fKsaMosYYhlhklOZNx1/LQ57aVT79m6/wCUnH60Ei7ZX9qZt2ClvFdvpU6Xx7PlZ35TtuM4+vTyqJ40B3DK3gyitDHvkYyamibLdtqM1sx7CdRnpy+5/DBq2mv6jFOs8V1eRHIBdLuUEfENkigzQnr9c1H2Rznv+lVaDs6VonGlw98Brd5b3VumArzZOPMKQAT5nBrpun8SWlwQbeYPEBhmiRgo+GMD0NcA0u2SeMhx7wGCVO+D/OuxfZNcq1lLo8wVmtl5k5l3MZOwz5HI+AoFh2gkS5EUkZ5lYgjYfpV6OCJSWVQT4mhOmRlJ7yPHKqznsgemNicfHNGsbg+VQh70oTxRaveaBeQxrzMU5lA8QaKtWvfmqvlFk3F7OY6FyQmOJwBhQN9sEU0oyopYnCAZJPQUE4ptuTWpeQBQ5DDG3Uf75qHUbqWXh25iwVlUKrMO9Swz/tSsX4zHbPfXsK2/GWhLKY5Lxo1H948TBP8AVjGPOj9pqNjeRdraXkEqYzzJICMVxCZDnc9DQkrI9yxt8LENm5duc+G39b06nH+LgQcZv7Vse+MPtHlmkay4alMcKEq95jdj/g8B50kSalqM7M0+o3spbr2lw7fxNaPaSIhcwSBR+ZFyPlVZZ4myFkU46jO4rqY6oa9rTOXkLIT9yaCtlxJrmnuHtdVvsDpG87OnybIrp3Cv2g6dq3Y2t9mzvSAuXI7ORvI92fA4rkAAYbY+dedlkbbela2YsbFwjGvJnW+T6UrKWvs/1ObUuH19rcvPbuYWY9WGAQT8Dj4Uy1x5wcJOLOxXNWRU18nzwNa1BNnQMvePdOfpUT6n28kamyiEjMAHMe6nx7hUUq5Byrb+Kjf+vSq8e9zGEA2cb/GryijGM3vQw3L6FFolnbXtjc/2ryrIbhT7hjMpYjrseXPxNYy8FytmHU9Rt27jJAxHzwa04gjmhS3jkkDlbZM4BAI3PgfGgJ7UgFQhUjvP8qmieXLD50vRpmKW/E9uQR/fry58t8VpBwu13bJNDc6XMXRSULhWXxB2peYMOsSbeBFaSFeUs9ufUUNB3sOXnCF9Ajv7EvIi8zNFODgehNU7nhe/iHv2d2v/AEBvqK31e9Zns/cuouS0iVlORnby6g1DHq99EMRaleL6uf1qFuEQCxlspVaUShQPe9xlPL3/ANeOKfOBO20/XrG9SeR4JVMUiluYFXYIv/2Kn0zSkmv6sF5l1KR2C8v3kasMZ6binPRL6O9QdvcQC4ktHB5WVOVu7bpnIzVGi8XtHujXdxDoV5/5hee3JdyhuSRi0OSSAw6DGKc/s2vLy+0Vp7+5e4maeUF3xvhgB0A8KghuotS0u8vIolQShyQuNyNidqm+zBeXh/f/ANxNv/1mh8Fl2OJ6Voa2NaGqlhS41j5LmGbxXHyP86oWIS4hkjcBlfKkHvBovxonNaQvjoxH0pY0i4ZZ+XupS5afA9S9xK2v8HXtxaGbR2SbbJhZgrbdwJ2PzFJvKdPtEm5fuNuaUJlmJ8K61NqUljZyNDGz535gvNyDvOB1pVvTZX1tbRW/I6PuV5SpQjxB6VaVm0g1UtNlrQpEaIrLGTkDBZP1oDx5w3Zqkd7Z2wRy/vhVwPUUz21za2EYEzjI6iqHEGqG85I4YysKnPMRnJrGDaltG80nHTECx0LU5W/4G2d4ebB5jhfgT076LX/D93YRpJMUYbc3Zk+7np6+FdN7Hs7WG1twsJEQChRgjI7vOlTjS5n0/RreBCJL6QoX93AKqSTt3Z6V0sbPshYot8HMyvplMqpT17vgOfZoGhW+gZcbI/r1FO9KP2c4n0pr/crNygZG4x1B9M03VvlyU7nJCGFCUKUpHztdafqMMAkuLCaKPIGTFtQ5eeO7XtBuPJgT5ivpy99murH/AIqMvAwB5CDnxHxoc/Cuguxd9NhLEYzisnLZsq1s45xM4WSANy49lg33741P60NsNK1C8s1ltbKSWPcBhjfHXrX0E1vaxKqCJORVCgYGFA6CkLQhaRWsgYxdvFc3EW5GyiViBg+tFyAquWcrmBTKyLyspwwJxg+FQuR2RIKY6/iHhXWtR1DSLecC5a1DuCxzGGz57CqUTaa+o3ZC2ZSS1jkjBC42Lg7fKh5E9MROIF7O7gA5Ti1i3z/hHn50OYAA5Xp35p+utStru9hgtYLR2d1jMjxqcegqlrFiND1Xmnigmt5CHiMiAK47wfTrVHck9Gyx5NbFGe3dI8NC6lthzIRn50+cK2ULNZ+0W8br2G6soP5jXj3+l3FmI5pLaQcuQJpFYqxHX51a0rXNLSW3gSaCOQxqNjhQOuAenfRbKKPiEdK0yG14V1S2haQJPJcFsHdD+HC/6aLfZiXGiSxtGwSOdwkpO0mWOcenSpuFYNPvotTt0dZovaCcxylhyuik7g/vc1HNGsLTTYHs7FGWKNyTli2WO53PrQLLsv8AWtSK2NaGqlgbr9sbrS5VUe8gDr8Ov0zXOO29nuAfOurMAdj0765zxNo7Q3UoiB5fxKfKsLo/IzRLXBbmluLjSLgWMwhnaMgOfyg9fpmue3kFzYWlteQ6izRh8BGYHnFXxe6jaLIVkPKFOUI2YY6Uo3+qe1SZuQqiPZI1GAtUri+jayaXIwWWoh2AuGLcv5fP9aZrUi5kgWNdyw2G/dSDoyXeoTCOCHlTqZX6Cum8PwQ6dGkYy8nL+JupozSQK5OQ1wWyyMkkhPaAYYqcA0mccWTJdtIztycuFwOlOunv2gzWnEWmnULF1RQXCnFUjxyWm9rTNOBlVOFrARgBeRjt/mNHqC8H2clhoFvbSqVYMxHN4E5o1Tq5Oe+wH/400rovtZx4W7VG3GumnpDet6RYob/Ydofwx8x8iTWr6FEv4bVv9BolC7Pxdasfu7W5I81T9TS6w0DVrueR9FkM5JdizKOY9/Q0T/smJR/y8YPmAK8i0y3ju4LjCRNG2TysPeHgaGwi7LFoEG6aKq56jth9cUI1D+xpRy22iW8Mn/qGUE//AJpv1vTjc3TyWskQUgbZ78b91LkvD1+8vMk1uN+/m3+lAJe0PRdKvbNc2sUVyhHLMg95T1DA0amtzeYsdVs4rpScozDK56Z8jvQKH2vS2McjDJ716GmLSdU7VAsvKTSFnZ1K2nFFe50OO0cLZ6LYdgcYbsgT8elWrSwjR+c6TYrL0ANuDRi1nV5OTPut40TtbZDyuGbY+PqKZps2tCV9epeRTsjc2eY4IbaEud0ghVeajdvG0cfv4523bHjWRRhSWH4j1z31KelbmGjQ1q1emtGoBNHNCdViW4kMbdCvXwoo9Drref1AqNb4JtrkR9V04xFwRykd1IHECwQSqpt42kbcsR0Fdv1HTF1G32IEwHu+flXF+ObOW31JBIrK3LykEeGalFa9VJlsm7dPHZY4Z1HtgYiqq0IBGP3en9etOaXCycmNmFch0u4khuO2RiCmD5Ef9hXRtHvEuIobiPaNlzv/AAoZdKT810w4N216b7R0PSX+7WifbAHfFKCa3bWUGZpFUdwzuaH3HGkztyW0A5e5pDv8qypxb7vsRplZuPj/AIkjpCsCAQRiva5/p/GlxG334jkH7q7U36brNrqK+6THIf7tzv8ACnpYl1UdyRzK/qGPdPxg+f14BjRzP+OWRvVyaiNqO8E0aMPlUTxeVLaG9gsQAbYqQW6nGRVvs9+lSRp5UdBKfsinuNeewjw+lFo4x4VKIR4UQMC3GlwXcXZzoCO494pT1bSbrRJe0AZ7cnAkHd5Hzro3ZjwrJbeOaF4pkV42GGVhkGqTrUjSu2UBE0bU1mwvMeceNOmkXCPyxlvebdfPxFc74j0qbh7UhLB71rKSYm8PI0b0TUDcRIUOHTdSD30rzXIclq2B0FRWN0qjpuopdLyyDkmA3XuPmKutv6U3GSa2hFpp6ZEa1NbNUbGiA0c0Ouf2w9KvOaoT/th6VCMuW3Slb7TtAh1Th25u0XF1aRtIrD8wA3B+FNFt0rTWkSTRdQjchQ1rICT5qavHfktFJrcXs+Z2UQWBbl+8kPKo8gBR2wmubHS4oOdVH4jI+xyfCqMkaTXce3uxjpUyA3F0ebO23pXV9GLl7uTivInGO4vW+y9bCW4fnMrMT+bHWisNhnAds+prLKJI0GFwfPrV9OldOqtJHByMmTk9EcdokZBGDjxo3pLxiZEDtE4PuqxypPke40LrcKG2Pz8POrzgpLQrG5qW2dWZBVeVcVdYVUuOhryR9EKbnBrZGyaqXkvZrzEZ3AFcz4o4z4l0zUns1jt7VdzDIE7QyL4gnb4YrH14ep6e/d2aeEvHz1wdii3qwK4lw/8AaNr9kZDqMJ1CMkEFkWNkx1xgDO3jXX9I1O11bT4b6xlEkEq5BHUeII7iK2My6RWCva9qEKeraZb6vYSWdyo5W3Vu9W7iK5hGLnRNUls588yHBx0I8fjXXRSpx/o3tNkdSt0zPbgdpjqyfyrK2G0bU2eLI7O6DRrLESJPEdRTDYaolwFjmPJJ6bN/tXNdI1AxkKzEoRtTJBP2qDBWlYzcGOWVxsWxxY/WtGoPZ6o0eIrokr0Ev+9FCwKgqQR3EU3CaktoRnBwemaSmqUv7UelWpd6pt+0q5Rl626Uu/aVqfsHDjQRkia8bsh/lxlvp/Gjwmit4WlncJGu5Y91c9401K21+7texSXsbVXGGHLzliMn090fOmcWt2WpISzrlTS2/ngQreykuHITbm2Ziw+Q/wB6NWtmtsFVEmQjvGDmrKxqicoQFB0DY2rYbdEdR/havQwoUezy1uS58Lo3Tcbc3xXFSKcbVHz/AOf41gOTTAi1stR71KfdBNQwGpZm901DBrnR1Z5AKqzOGqC4uAvfvVX2oHvrxx9KMu4lmQqfhjupc1vSbbVbRrHUQQesMydUP7wP6UxGQH1oVxJf2+m6Pc3tyGYRLlFXqznZVHmSQK52dheuvUrepx6GaL/D2y6OZ3cd7o9x7Dd2cs0yn3JI0yswPRh+voau8D8Xvoutst4Ow025b79DnEbY2fy8DTtZXUWpWkltcLyOV5Jog454WIBwSDscEVzLi7R77h26DR801q+Skgxlh5+eOtZYP1H1Zum5eM1/ctkY/h748pn0KkisgZWDKRkEHYjxFbBupriPA3H01tCdMuJGWLl+7mcA9h89uX16fOnGDiWaPUlhubm9fZvuwke+2cjAH8e+uopfDFdfJ0EHyNbMqsjKwyrDBB6GllNdXPKtxIzeHs53PgD06edD240vYOZpNKcxA/jPN08emKLa+SJNvSFniLTX0DWpLdVPssnvwk/u+HwrazvmhwRvHVviTiix12yFtNbdjOh5oZOcbN4Y6kGluzumj91jjxHdSlkVvg6FfmopyWh9sbyK5QAFT4+VXomuLb9g5Zf3G6fypKtZmiftYTsPxL40x6fqSzqDzbd4PdWXK6NXFS7D0N4k2zAxv+61Q3NxHBmSVuUDp4n0quVV91wD1yDUL2ys2WJY+ZrVZGlyLvFTffBWeae9n55QVjX9nH4eZ861vdGivYyy/dzgbODsfWr8cYTAxtUgkXuOKrC6yE/OL5NLKKrK/TktoQ7m1ntbhobgckq922D6VH7/AHIH9DTnrVrHqMHK2BIuezkxjB8PSkxoW52XDRzITzg163Az45MdPiSPB/VPpUsOe1zB/wDaZrzfvRstbLv3GtQ84/CQw86lR26yJjzFdE4zWiSMYrLgnszjwrZDsWOwrGXtXESndlPL8qDMlzIbtQu+TJzQpNSHP+IVve2d/enEMYRe9n2qCDhqCA9tqF8W36KQi/OvGyaXZ9JSbClvdq4BDA0lcU8VWB4jt7OZZLlNPdZFto1/b3J/CCfBc59T5U2TRWCQGOK7jiONmG/zpbXh60dY00ye3eZZO1aUMpkZ/Enc0FYmuGWcJINaNBHaaZ2UhzeSyNPPL1LSt1+A2A8gKuTRW+q2r2d6nMh2yDup7iPSgs8Psac11qkCD90yqh+u9CZOKdOsWPYz9o4O/IC3N8a5X1HA9f8Ae1cTQ1j3KHsn9oucQaXNw5qHYXKqUmz2c6KB2ijv9aK8Jajr08gi08KbK3VlSSZeZFGNgSMEnyHTwqS6+0EzdlGNJhniRubNy2+fIY29d6buHp7biTS0vms4Y0JK9mD+Ag9xwKvXZmOEVOGn+e/9FoelXJuL3+hXWW+kObm91IN+ZYIo1X4ErnFQ3djYXEJEz6r2jdGcuy57tgCDRuTRkBzDJcRnwEvNj4HNV5LHUY94bjnHhJGFP+oH9K6HjvspG9x6Bdnw3pE8UMSySTGPBCrctnI7yoO3yFT6jwuOw7WxVu0XJKsxPP8AE99eXV1Kp7C6hVHxzL2nv8wHerf0arw6vdRTLbvISkm8Zbcgj8vn61PBItPJnYuWULI745irjYg9xq/CjpKrA7nvHStbmylu5TcRE9sRuD0JHfnxqKyvuZhHKCGG2/cRS9kHE0qsUxotp5OUAj1NWxIO+h1ncoiJjFe3OpQxH32APhmsuzfRdeY1H2i432oDda/ApPvDpnrQi64sgj6SZPgN60jVKXSM5Wwh2xzNwgzvt50scU3kMLRXikAocSY/Mv8AKlm94uuJMrbx4/xOf0oBeXNxfPzXEjPnuPSuhi4tsJqa40cvNy8e2t1NbTHxisoWaGQcrjOx2PmKinvIoFzdSongD1PoKVbS+vE0sWdoQOw6MdyRnpUdvENQJPOTcjqCdz6V6VXtrSR479gSb8nwHp9ckucJZQ+6u+X7z6VvY312t3HJOGz40NtgVA5gCw2yKM2e+O+rxTfbM7Y11rUVwdRO5APfXM/thkcJaQByImcgr3HCnH8foKysrx8+4nuYdP8Akc4t9RvbVh7Pdzx46BZDj5dK6spi0/h63uhbQXMzLlmuV58nHWvayuf9VXNa/Nm+HJuEmyXSdRfVNKs3ura1KzXjQyRiEcpQZ2wfSkHim1i07WLq2tF5Ikb3R4bA1lZWH0725Morrn/JbJe4IBpmRxzE9a7vwzp8GlcPWFva83JJF2zFupZjvWVld2fQnDsYLeNWRWYZNWZUSOEFVG/jWVlVCxE4++6t45U2kWVSrd43x/Cl+7AjjZ1/FHhgT45r2soMMewtLNICUVio36UJvgFZJV2ZiAfOsrKE/tDW/eSS3EqxKqsRk42odxDAbc8kc0ozD2hORnPNjwrKys6khnJbXQkdtLLJdLLIzhSAMnpvVhmPbAdxWsrK7GMl4HAyG3M8HdViJQTvWVlNw7E5lrSNtSVe5hgivb6NYLq4aIcrR8pUjzr2splfZ/Uwf4uv0C6qJrJJ3H3hflJHfRDTgMr617WUyjlX9M//2Q==" /></div>
+        <div class="svc-card-name">AC repair</div>
+        <div class="svc-card-meta"><span class="star"><i class="fas fa-star"></i></span> 4.73 <span style="color:#d1d5db">•</span><span class="instant-tag"><i class="fas fa-bolt"></i>Instant</span></div>
+        <div class="svc-card-price">₹299</div>
+      </div>
+      <div class="svc-card fade-up" onclick="addToCart('Roll-on waxing', 749)">
+        <div class="svc-card-img"><img src="https://images.unsplash.com/photo-1559599101-f09722fb4948?w=450&q=80" alt="Waxing" onload="this.classList.add('loaded')" /></div>
+        <div class="svc-card-name">Roll-on waxing (Full arms, legs &amp; underarms)</div>
+        <div class="svc-card-meta"><span class="star"><i class="fas fa-star"></i></span> 4.87</div>
+        <div class="svc-card-price">₹749</div>
+      </div>
+      <div class="svc-card fade-up" onclick="addToCart('Intense cleaning', 960)">
+        <div class="svc-card-img"><img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=450&q=80" alt="Cleaning" onload="this.classList.add('loaded')" /></div>
+        <div class="svc-card-name">Intense cleaning (2 bathrooms)</div>
+        <div class="svc-card-meta"><span class="star"><i class="fas fa-star"></i></span> 4.80</div>
+        <div class="svc-card-price">₹960 <span class="old-price">₹1,038</span></div>
+      </div>
+      <div class="svc-card fade-up" onclick="addToCart('Classic cleaning', 794)">
+        <div class="svc-card-img" style="display:flex;align-items:center;justify-content:center;background:#f3f4f6">
+          <div style="text-align:center">
+            <div style="font-size:46px;font-weight:800;color:#d1d5db;line-height:1">2</div>
+            <div style="font-size:11px;font-weight:700;color:#9ca3af;letter-spacing:1px">BATHROOMS</div>
+          </div>
+        </div>
+        <div class="svc-card-name">Classic cleaning (2 bathrooms)</div>
+        <div class="svc-card-meta"><span class="star"><i class="fas fa-star"></i></span> 4.82</div>
+        <div class="svc-card-price">₹794 <span class="old-price">₹858</span></div>
+      </div>
+    </div>
+    <div class="scroll-arrow" onclick="scrollRow('mostBooked', 230)" style="top:46%">
+      <i class="fas fa-arrow-right" style="font-size:12px;color:#374151"></i>
+    </div>
+  </div>
+</div>
+
+<!-- ===========================
+     SALON FOR WOMEN
+=========================== -->
+<div class="section-wrap">
+  <div class="cat-header">
+    <div>
+      <div class="cat-title">Salon for Women</div>
+      <div class="cat-sub">Pamper yourself at home</div>
+    </div>
+    <button class="see-all-btn" onclick="showToast('All Salon for Women services')">See all</button>
+  </div>
+  <div class="product-grid">
+    <div class="product-card fade-up" onclick="addToCart('Roll-on waxing', 749)">
+      <div class="product-card-img"><img src="https://images.unsplash.com/photo-1559599101-f09722fb4948?w=400&q=80" alt="Waxing" onload="this.classList.add('loaded')" /></div>
+      <div class="product-card-name">Roll-on waxing (Full arms, legs &amp; underarms)</div>
+      <div class="product-card-rating"><i class="fas fa-star"></i> 4.87</div>
+      <div class="product-card-price">₹749</div>
+    </div>
+    <div class="product-card fade-up" onclick="addToCart('Spatula waxing', 599)">
+      <div class="product-card-img"><img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=400&q=80" alt="Waxing" onload="this.classList.add('loaded')" /></div>
+      <div class="product-card-name">Spatula waxing (Full arms, legs &amp; underarms)</div>
+      <div class="product-card-rating"><i class="fas fa-star"></i> 4.86</div>
+      <div class="product-card-price">₹599</div>
+    </div>
+    <div class="product-card fade-up" onclick="addToCart('Mani-pedi', 1168)">
+      <div class="product-card-img"><img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=400&q=80" alt="Manicure" onload="this.classList.add('loaded')" /></div>
+      <div class="product-card-name">Mani-pedi delight</div>
+      <div class="product-card-rating"><i class="fas fa-star"></i> 4.82</div>
+      <div class="product-card-price">₹1,168</div>
+    </div>
+    <div class="product-card fade-up" onclick="addToCart('Aroma facial', 799)">
+      <div class="product-card-img"><img src="data:image/jpeg;base64,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" /></div>
+      <div class="product-card-name">Aroma Magic instant glow facial</div>
+      <div class="product-card-rating"><i class="fas fa-star"></i> 4.85</div>
+      <div class="product-card-price">₹799</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===========================
+     CLEANING ESSENTIALS
+=========================== -->
+<div class="section-wrap">
+  <div class="cat-header">
+    <div>
+      <div class="cat-title">Cleaning Essentials</div>
+      <div class="cat-sub">Monthly cleaning essential services</div>
+    </div>
+    <button class="see-all-btn" onclick="showToast('All Cleaning services')">See all</button>
+  </div>
+  <div class="h-scroll-wrap">
+    <div class="h-scroll" id="cleanRow">
+      <div class="svc-card fade-up" onclick="addToCart('Intense cleaning (2 bathrooms)', 960)">
+        <div class="svc-card-img"><img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=450&q=80" alt="" onload="this.classList.add('loaded')" /></div>
+        <div class="svc-card-name">Intense cleaning (2 bathrooms)</div>
+        <div class="svc-card-meta"><span class="star"><i class="fas fa-star"></i></span> 4.80</div>
+        <div class="svc-card-price">₹960 <span class="old-price">₹1,038</span></div>
+      </div>
+      <div class="svc-card fade-up" onclick="addToCart('Classic cleaning (2 bathrooms)', 794)">
+        <div class="svc-card-img" style="display:flex;align-items:center;justify-content:center;background:#f3f4f6">
+          <div style="text-align:center">
+            <div style="font-size:46px;font-weight:800;color:#d1d5db;line-height:1">2</div>
+            <div style="font-size:11px;font-weight:700;color:#9ca3af;letter-spacing:1px">BATHROOMS</div>
+          </div>
+        </div>
+        <div class="svc-card-name">Classic cleaning (2 bathrooms)</div>
+        <div class="svc-card-meta"><span class="star"><i class="fas fa-star"></i></span> 4.82</div>
+        <div class="svc-card-price">₹794 <span class="old-price">₹858</span></div>
+      </div>
+      <div class="svc-card fade-up" onclick="addToCart('Intense cleaning (3 bathrooms)', 1401)">
+        <div class="svc-card-img"><img src="https://images.unsplash.com/photo-1563453392212-326f5e854473?w=450&q=80" alt="" onload="this.classList.add('loaded')" /></div>
+        <div class="svc-card-name">Intense cleaning (3 bathrooms)</div>
+        <div class="svc-card-meta"><span class="star"><i class="fas fa-star"></i></span> 4.80</div>
+        <div class="svc-card-price">₹1,401 <span class="old-price">₹1,557</span></div>
+      </div>
+      <div class="svc-card fade-up" onclick="addToCart('Chimney cleaning', 599)">
+        <div class="svc-card-img" style="background:#1a1a2e;display:flex;align-items:center;justify-content:center">
+          <span style="font-size:3rem">⚡</span>
+        </div>
+        <div class="svc-card-name">Chimney cleaning</div>
+        <div class="svc-card-meta"><span class="star"><i class="fas fa-star"></i></span> 4.82</div>
+        <div class="svc-card-price">₹599</div>
+      </div>
+    </div>
+    <div class="scroll-arrow" onclick="scrollRow('cleanRow', 230)" style="top:42%">
+      <i class="fas fa-arrow-right" style="font-size:12px;color:#374151"></i>
+    </div>
+  </div>
+</div>
+
+<!-- ===========================
+     APPLIANCE REPAIR
+=========================== -->
+<div class="section-wrap">
+  <div class="cat-header">
+    <div>
+      <div class="cat-title">Appliance repair &amp; service</div>
+      <div class="cat-sub">Expert technicians at your doorstep</div>
+    </div>
+    <button class="see-all-btn" onclick="showToast('All Appliance services')">See all</button>
+  </div>
+  <div class="h-scroll-wrap">
+    <div class="h-scroll" id="appRow">
+      <div class="svc-card fade-up" onclick="addToCart('Foam-jet AC service', 699)">
+        <div class="svc-card-img"><img src="https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=450&q=80" alt="" onload="this.classList.add('loaded')" /></div>
+        <div class="svc-card-name">Foam-jet AC service</div>
+        <div class="svc-card-meta"><span class="star"><i class="fas fa-star"></i></span> 4.76 <span style="color:#d1d5db">•</span><span class="instant-tag"><i class="fas fa-bolt"></i>Instant</span></div>
+        <div class="svc-card-price">₹699</div>
+      </div>
+      <div class="svc-card fade-up" onclick="addToCart('AC repair', 299)">
+        <div class="svc-card-img"><img src="data:image/jpeg;base64,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" /></div>
+        <div class="svc-card-name">AC repair</div>
+        <div class="svc-card-meta"><span class="star"><i class="fas fa-star"></i></span> 4.73 <span style="color:#d1d5db">•</span><span class="instant-tag"><i class="fas fa-bolt"></i>Instant</span></div>
+        <div class="svc-card-price">₹299</div>
+      </div>
+      <div class="svc-card fade-up" onclick="addToCart('Refrigerator repair', 499)">
+        <div class="svc-card-img"><img src="https://images.unsplash.com/photo-1556909212-d5b604d0c90d?w=450&q=80" alt="" onload="this.classList.add('loaded')" /></div>
+        <div class="svc-card-name">Refrigerator repair</div>
+        <div class="svc-card-meta"><span class="star"><i class="fas fa-star"></i></span> 4.71</div>
+        <div class="svc-card-price">₹499</div>
+      </div>
+      <div class="svc-card fade-up" onclick="addToCart('Washing machine repair', 449)">
+        <div class="svc-card-img"><img src="data:image/jpeg;base64,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" /></div>
+        <div class="svc-card-name">Washing machine repair</div>
+        <div class="svc-card-meta"><span class="star"><i class="fas fa-star"></i></span> 4.68</div>
+        <div class="svc-card-price">₹449</div>
+      </div>
+    </div>
+    <div class="scroll-arrow" onclick="scrollRow('appRow', 230)" style="top:42%">
+      <i class="fas fa-arrow-right" style="font-size:12px;color:#374151"></i>
+    </div>
+  </div>
+</div>
+
+<!-- ===========================
+     FOOTER
+=========================== -->
+<footer>
+  <div class="footer-inner">
+
+    <!-- Logo -->
+    <div class="footer-logo">
+      <div class="logo-box"><span>UC</span></div>
+      <div class="brand-name">
+        <div class="top">Urban</div>
+        <div class="bot">Company</div>
+      </div>
+    </div>
+
+    <!-- 4-column grid -->
+    <div class="footer-grid">
+
+      <!-- Column 1: Company -->
+      <div>
+        <div class="footer-col-title">Company</div>
+        <ul class="footer-links">
+          <li><a href="#" onclick="showToast('About us');return false">About us</a></li>
+          <li><a href="#" onclick="showToast('Investor Relations');return false">Investor Relations</a></li>
+          <li><a href="#" onclick="showToast('Terms & conditions');return false">Terms &amp; conditions</a></li>
+          <li><a href="#" onclick="showToast('Privacy policy');return false">Privacy policy</a></li>
+          <li><a href="#" onclick="showToast('Anti-discrimination policy');return false">Anti-discrimination policy</a></li>
+          <li><a href="#" onclick="showToast('Careers');return false">Careers</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 2: For customers -->
+      <div>
+        <div class="footer-col-title">For customers</div>
+        <ul class="footer-links">
+          <li><a href="#" onclick="showToast('UC reviews');return false">UC reviews</a></li>
+          <li><a href="#" onclick="showToast('Categories near you');return false">Categories near you</a></li>
+          <li><a href="#" onclick="showToast('Contact us');return false">Contact us</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 3: For professionals -->
+      <div>
+        <div class="footer-col-title">For professionals</div>
+        <ul class="footer-links">
+          <li><a href="#" onclick="showToast('Register as a professional');return false">Register as a professional</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 4: Social + App links -->
+      <div>
+        <div class="footer-col-title">Social links</div>
+        <div class="social-row">
+          <div class="social-btn" onclick="showToast('Twitter/X')"><i class="fab fa-x-twitter"></i></div>
+          <div class="social-btn" onclick="showToast('Facebook')"><i class="fab fa-facebook-f"></i></div>
+          <div class="social-btn" onclick="showToast('Instagram')"><i class="fab fa-instagram"></i></div>
+          <div class="social-btn" onclick="showToast('LinkedIn')"><i class="fab fa-linkedin-in"></i></div>
+        </div>
+        <div class="app-store-btn" onclick="showToast('App Store')">
+          <i class="fab fa-apple"></i>
+          <div><small>Download on the</small><strong>App Store</strong></div>
+        </div>
+        <div class="app-store-btn" onclick="showToast('Google Play')">
+          <i class="fab fa-google-play"></i>
+          <div><small>GET IT ON</small><strong>Google Play</strong></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom copyright -->
+    <div class="footer-bottom">
+      <p>* As on December 31, 2024</p>
+      <p>© Copyright 2026 Urban Company Limited. All rights reserved. | CIN: L74140DL2014PLC274413</p>
+    </div>
+
+  </div>
+</footer>
+
+<!-- ===========================
+     jQuery + Bootstrap JS
+=========================== -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  // ===========================
+  // CART COUNT
+  // ===========================
+  var cartCount = 0;
+
+  // ===========================
+  // SHOW TOAST NOTIFICATION
+  // ===========================
+  function showToast(message) {
+    document.getElementById('toastText').textContent = message;
+    var toast = document.getElementById('toast');
+    toast.style.display = 'flex';
+    clearTimeout(window.toastTimer);
+    window.toastTimer = setTimeout(function() {
+      toast.style.display = 'none';
+    }, 2500);
+  }
+
+  // ===========================
+  // ADD ITEM TO CART
+  // ===========================
+  function addToCart(name, price) {
+    cartCount++;
+    var badge = document.getElementById('cartCount');
+    badge.textContent = cartCount;
+    badge.style.display = 'flex';
+    showToast('Added: ' + name + ' — ₹' + price);
+  }
+
+  // ===========================
+  // NAV LINK ACTIVE STATE
+  // Clicking Revamp / Native / Beauty opens its own full page
+  // ===========================
+  function setActiveLink(name) {
+    document.querySelectorAll('.nav-links a').forEach(function(a) {
+      a.classList.remove('active');
+    });
+    var link = document.getElementById('link-' + name);
+    if (link) link.classList.add('active');
+    closeMobileMenu();
+
+    // Open the matching full page
+    if (name === 'Revamp') openPage('revampPage');
+    else if (name === 'Native') openPage('nativePage');
+    else if (name === 'Beauty') openPage('beautyPage');
+  }
+
+  // ===========================
+  // FULL PAGE OPEN / CLOSE
+  // Used for Revamp, Native, Beauty pages
+  // ===========================
+  function openPage(pageId) {
+    document.getElementById(pageId).classList.add('open');
+    document.body.style.overflow = 'hidden';
+    window.scrollTo(0, 0);
+  }
+
+  function closePage(pageId) {
+    document.getElementById(pageId).classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // Switch from one full page to another (used by in-page nav links)
+  function switchPage(fromId, toId) {
+    closePage(fromId);
+    openPage(toId);
+  }
+
+  // ===========================
+  // LOCATION MODAL
+  // ===========================
+  function openLocationModal() {
+    document.getElementById('locationModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    setTimeout(function() { document.getElementById('locSearchInput').focus(); }, 200);
+  }
+
+  function closeLocationModal() {
+    document.getElementById('locationModal').classList.remove('open');
+    document.body.style.overflow = '';
+    document.getElementById('locSearchInput').value = '';
+    document.getElementById('cityList').style.display = 'none';
+  }
+
+  // Close if clicking the dark overlay
+  function closeLocModal(event) {
+    if (event.target === document.getElementById('locationModal')) {
+      closeLocationModal();
+    }
+  }
+
+  function setCity(cityName) {
+    document.getElementById('locationText').textContent = cityName;
+    closeLocationModal();
+    showToast('Location set to ' + cityName);
+  }
+
+  function useCurrentLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        function() { setCity('Current Location'); },
+        function() { showToast('Location access denied'); }
+      );
+    } else {
+      showToast('Geolocation not supported');
+    }
+  }
+
+  // ===========================
+  // LOGIN MODAL
+  // ===========================
+  function openLoginModal() {
+    document.getElementById('loginModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    document.getElementById('loginTip').style.display = 'none';
+  }
+
+  function closeLogin() {
+    document.getElementById('loginModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // Close if clicking the dark overlay
+  function closeLoginModal(event) {
+    if (event.target === document.getElementById('loginModal')) {
+      closeLogin();
+    }
+  }
+
+  // Make Continue button active when 10 digits entered
+  function checkPhoneReady() {
+    var phone = document.getElementById('phoneInput').value;
+    var btn = document.getElementById('continueBtn');
+    if (phone.length >= 10) {
+      btn.classList.add('ready');
+    } else {
+      btn.classList.remove('ready');
+    }
+  }
+
+  function handleContinue() {
+    var phone = document.getElementById('phoneInput').value;
+    if (phone.length >= 10) {
+      closeLogin();
+      showToast('OTP sent to +91 ' + phone);
+    }
+  }
+
+  // ===========================
+  // CART PAGE
+  // ===========================
+  function openCart() {
+    document.getElementById('cartPage').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeCart() {
+    document.getElementById('cartPage').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // ===========================
+  // SUBCATEGORY MODAL
+  // Data for Women's Salon and Men's Salon sub-items
+  // ===========================
+  var subcategoryData = {
+    "Women's Salon & Spa": [
+      {
+        name: 'Salon for Women',
+        icon: 'https://cdn3d.iconscout.com/3d/premium/thumb/spa-woman-3d-icon-download-in-png-blend-fbx-gltf-file-formats--girl-beauty-facial-mask-pack-people-icons-9232704.png?f=webp',
+        fallback: 'https://em-content.zobj.net/source/apple/391/woman-getting-massage_1f486-200d-2640-fe0f.png',
+        mins: ''
+      },
+      {
+        name: 'Spa for Women',
+        icon: 'https://cdn3d.iconscout.com/3d/premium/thumb/massage-table-3d-icon-download-in-png-blend-fbx-gltf-file-formats--spa-bed-beauty-relaxation-pack-sports-icons-5642311.png?f=webp',
+        fallback: 'data:image/jpeg;base64,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',
+        mins: '55 mins'
+      },
+      {
+        name: 'Hair Studio for Women',
+        icon: 'https://cdn3d.iconscout.com/3d/premium/thumb/hair-dryer-3d-icon-download-in-png-blend-fbx-gltf-file-formats--beauty-salon-blow-hairdryer-pack-tools-equipment-icons-5567512.png?f=webp',
+        fallback: 'data:image/jpeg;base64,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',
+        mins: ''
+      },
+      {
+        name: 'Makeup, Saree & Styling',
+        icon: 'https://cdn3d.iconscout.com/3d/premium/thumb/lipstick-3d-icon-download-in-png-blend-fbx-gltf-file-formats--makeup-beauty-cosmetic-pack-healthcare-icons-5642391.png?f=webp',
+        fallback: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSo8dZANZ7X1tjj_yTcpa2Dvwv0JUKSiHllVun1xulyp7Z-UniZNhOx9Zo&s',
+        mins: ''
+      }
+    ],
+    "Men's Salon & Massage": [
+      {
+        name: 'Salon for Men',
+        icon: 'https://cdn3d.iconscout.com/3d/premium/thumb/man-shaving-3d-icon-download-in-png-blend-fbx-gltf-file-formats--beard-shave-male-grooming-pack-people-icons-9232715.png?f=webp',
+        fallback: 'https://em-content.zobj.net/source/apple/391/man-getting-haircut_1f487-200d-2642-fe0f.png',
+        mins: ''
+      },
+      {
+        name: 'Massage for Men',
+        icon: 'https://cdn3d.iconscout.com/3d/premium/thumb/massage-table-3d-icon-download-in-png-blend-fbx-gltf-file-formats--spa-bed-beauty-relaxation-pack-sports-icons-5642311.png?f=webp',
+        fallback: 'https://cdn-icons-png.flaticon.com/512/2721/2721620.png',
+        mins: ''
+      }
+    ]
+  };
+
+  function openSubcat(title) {
+    var items = subcategoryData[title];
+    if (!items) { showToast(title); return; }
+
+    // Set the title
+    document.getElementById('subcatTitle').textContent = title;
+
+    // Build the grid HTML
+    var html = '';
+    items.forEach(function(item) {
+      html += '<div class="subcat-card" onclick="showToast(\'' + item.name + '\')">';
+      html += '<div class="subcat-icon-box">';
+      html += '<img src="' + item.icon + '" alt="' + item.name + '" onerror="this.src=\'' + item.fallback + '\'" />';
+      if (item.mins) {
+        html += '<span class="subcat-min">' + item.mins + '</span>';
+      }
+      html += '</div>';
+      html += '<div class="subcat-name">' + item.name + '</div>';
+      html += '</div>';
+    });
+    document.getElementById('subcatGrid').innerHTML = html;
+
+    // Open the modal
+    document.getElementById('subcatModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeSubcat() {
+    document.getElementById('subcatModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function closeSubcatModal(event) {
+    if (event.target === document.getElementById('subcatModal')) {
+      closeSubcat();
+    }
+  }
+
+  // ===========================
+  // INSTAHELP PAGE
+  // ===========================
+  function openInstaPage() {
+    document.getElementById('instaPage').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeInstaPage() {
+    document.getElementById('instaPage').style.display = 'none';
+    document.body.style.overflow = '';
+  }
+
+  // ===========================
+  // SEARCH DROPDOWN
+  // ===========================
+  var allServices = [
+    'Salon', "Women's Salon & Spa", "Men's Salon & Massage",
+    'Cleaning & Pest Control', 'Painting & Water-proofing',
+    'AC & Appliance Repair', 'Electrician, Plumber & Carpenter',
+    'Foam-jet AC service', 'AC repair', 'Bathroom Cleaning', 'Sofa Cleaning',
+    'Haircut & Styling', 'Facial', 'Waxing', 'Refrigerator Repair',
+    'Washing machine repair', 'Full home cleaning', 'Professional bathroom cleaning',
+    'Professional kitchen cleaning', 'Massage for men', 'Ro repair', 'Spa luxe', 'Tv repair'
+  ];
+
+  function showSearchDrop() {
+    document.getElementById('searchDropdown').classList.add('show');
+  }
+
+  function filterSearch(query) {
+    var list = document.getElementById('trendingList');
+    if (!query) {
+      // Show default trending tags
+      list.innerHTML = [
+        'Salon', 'Professional bathroom cleaning', 'Professional kitchen cleaning',
+        'Massage for men', 'Washing machine repair', 'Full home cleaning', 'Ro repair', 'Refrigerator repair'
+      ].map(function(s) {
+        return '<div class="trend-tag" onclick="selectSearch(\'' + s + '\')"><i class="fas fa-chart-line"></i>' + s + '</div>';
+      }).join('');
+      return;
+    }
+    // Filter services that match the query
+    var matches = allServices.filter(function(s) {
+      return s.toLowerCase().includes(query.toLowerCase());
+    });
+    if (matches.length === 0) {
+      list.innerHTML = '<div class="trend-tag" style="color:#9ca3af;cursor:default"><i class="fas fa-search"></i>No results found</div>';
+    } else {
+      list.innerHTML = matches.slice(0, 8).map(function(s) {
+        return '<div class="trend-tag" onclick="selectSearch(\'' + s.replace(/'/g, "\\'") + '\')">'
+             + '<i class="fas fa-search"></i>' + s + '</div>';
+      }).join('');
+    }
+    document.getElementById('searchDropdown').classList.add('show');
+  }
+
+  function selectSearch(name) {
+    document.getElementById('searchInput').value = name;
+    document.getElementById('searchDropdown').classList.remove('show');
+    showToast('Searching: ' + name);
+  }
+
+  // Close search dropdown when clicking outside
+  document.addEventListener('click', function(e) {
+    var searchBox = document.querySelector('.search-box');
+    if (searchBox && !searchBox.contains(e.target)) {
+      document.getElementById('searchDropdown').classList.remove('show');
+    }
+  });
+
+  // ===========================
+  // HORIZONTAL SCROLL
+  // ===========================
+  function scrollRow(rowId, pixels) {
+    var row = document.getElementById(rowId);
+    if (row) row.scrollBy({ left: pixels, behavior: 'smooth' });
+  }
+
+  // ===========================
+  // MOBILE MENU
+  // ===========================
+  function openMobileMenu() {
+    document.getElementById('mobileDrawer').style.left = '0';
+    document.getElementById('mobileOverlay').style.display = 'block';
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMobileMenu() {
+    document.getElementById('mobileDrawer').style.left = '-280px';
+    document.getElementById('mobileOverlay').style.display = 'none';
+    document.body.style.overflow = '';
+  }
+
+  // ===========================
+  // NAVBAR SHADOW ON SCROLL
+  // ===========================
+  window.addEventListener('scroll', function() {
+    var navbar = document.querySelector('.navbar');
+    if (window.scrollY > 20) {
+      navbar.style.boxShadow = '0 2px 12px rgba(0,0,0,0.08)';
+    } else {
+      navbar.style.boxShadow = '';
+    }
+
+    // Show/hide scroll-to-top button
+    var topBtn = document.getElementById('topBtn');
+    if (window.scrollY > 350) {
+      topBtn.style.display = 'block';
+    } else {
+      topBtn.style.display = 'none';
+    }
+  });
+
+  // ===========================
+  // FADE-UP ON SCROLL ANIMATION
+  // (This is just a nice-to-have animation.
+  //  Cards are visible by default — this only adds
+  //  the entrance animation. If this code fails for
+  //  any reason, the page still shows everything fine.)
+  // ===========================
+  try {
+    document.querySelectorAll('.fade-up').forEach(function(el) {
+      el.classList.add('fade-up-init'); // start hidden just for the animation
+    });
+
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.remove('fade-up-init'); // reveal with animation
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-up').forEach(function(el) {
+      observer.observe(el);
+    });
+  } catch (err) {
+    // If IntersectionObserver isn't supported, do nothing —
+    // cards are already visible by default (no .fade-up-init class added).
+    console.log('Fade animation skipped:', err);
+  }
+
+  // ===========================
+  // WELCOME MESSAGE ON LOAD
+  // ===========================
+  window.addEventListener('load', function() {
+    setTimeout(function() {
+      showToast('Welcome! 12M+ customers trust Urban Company 🏠');
+    }, 900);
+  });
+</script>
+
+</body>
+</html>
